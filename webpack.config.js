@@ -10,7 +10,7 @@ module.exports = {
     },
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
-        modules: [path.resolve(__dirname, 'client'), 'node_modules'],
+        modules: [path.resolve(__dirname, './client'), './node_modules'],
     },
     module: {
         rules: [
@@ -41,11 +41,15 @@ module.exports = {
     },
     devServer: {
         historyApiFallback: true,
+        port: process.env.PORT || 3000,
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: './www/index.html',
         }),
-        new StylelintPlugin(),
+        new StylelintPlugin({
+            configFile: path.resolve(__dirname, './.stylelintrc.json'),
+            context: path.resolve(__dirname, './client'),
+        }),
     ],
 };
