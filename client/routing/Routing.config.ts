@@ -36,4 +36,8 @@ export const ROUTES: RoutesProps = {
         path: '/leaderboard',
         title: 'Таблица лидеров',
     },
+    UIKIT: {
+        path: '/uikit',
+        title: 'Компоненты',
+    },
 };
