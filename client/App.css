@@ -1,10 +1,21 @@
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 @import url('./shared/styles/normalize.css');
 
+:root {
+    --primary-color: #bb86fc;
+    --panel-background: #444444bd;
+    --general-background: #fff1;
+    --panel-shadow-1: #ffffff15;
+    --panel-shadow-2: #fff1;
+    --panel-shadow-3: #ffffff1e;
+    --half-white: #ffffff80;
+    --header-color: #ffffffde;
+}
+
 #root {
     height: inherit;
     display: flex;
-    background: #fff1;
+    background: var(--general-background);
 }
 
 body {
@@ -27,8 +38,8 @@ ul {
 }
 
 .auth-formbox {
-    background: #444444bd;
-    box-shadow: 0 8px 10px #ffffff15, 0 3px 14px #fff1, 0 5px 5px #ffffff1e;
+    background: var(--panel-background);
+    box-shadow: 0 8px 10px var(--panel-shadow-1), 0 3px 14px var(--panel-shadow-2), 0 5px 5px var(--panel-shadow-3);
     padding: 24px 16px;
     border-radius: 12px;
     width: 340px;
@@ -39,22 +50,22 @@ ul {
     width: 100%;
     background: transparent;
     box-shadow: none;
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--half-white);
     border-radius: 4px;
     padding: 16px;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--half-white);
     margin: 16px 0;
 }
 
 .auth-header {
-    color: rgba(255, 255, 255, 0.87);
+    color: var(--header-color);
     font-size: 24px;
     margin-bottom: 16px;
 }
 
 .form-input_primary:focus {
     outline: none;
-    border-color: #bb86fc;
+    border-color: var(--primary-color);
     color: #fff;
 }
 
@@ -73,13 +84,13 @@ ul {
     font-weight: 500;
 
     &_primary {
-        background-color: #bb86fc;
+        background-color: var(--primary-color);
         color: #000;
         margin: 16px 0;
     }
 
     &_link {
-        color: #bb86fc;
+        color: var(--primary-color);
         text-transform: uppercase;
         padding: 10px;
     }
