@@ -42,7 +42,7 @@ export const SigninForm: React.FC = React.memo(() => {
             {controls}
 
             <Button type="submit" variant="outlined" children="Авторизоваться" className="btn btn_primary btn_wide" />
-            <Link to={ROUTES.SIGNUP.path} className="help-button">Нет аккаунта?</Link>
+            <Link to={ROUTES.SIGNUP.path} className="btn btn_link">Нет аккаунта?</Link>
         </form>
     );
 });
