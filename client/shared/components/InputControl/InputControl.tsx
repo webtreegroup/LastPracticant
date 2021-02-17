@@ -3,6 +3,7 @@ import { FieldError } from 'react-hook-form';
 import classnames from 'classnames';
 import { ComponentCommonProps } from 'client/shared/types';
 import './InputControl.css';
+import { OutlinedInput } from '@material-ui/core';
 
 export interface InputControlProps extends ComponentCommonProps {
     name: string
@@ -29,15 +30,15 @@ InputControlProps
         },
         ref,
     ) => (
-        <div className={classnames('input-control', className)}>
-            <input
+        <div>
+            <OutlinedInput
                 name={name}
-                placeholder=' '
+                placeholder={label}
                 ref={ref}
                 id={name}
                 type={type}
+                className={classnames('input-control', className)}
             />
-            <label htmlFor={name}>{label}</label>
             <span>{error && errorMessage}</span>
         </div>
     ),

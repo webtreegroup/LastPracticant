@@ -4,7 +4,7 @@ import {
 } from 'react-router-dom';
 import { ROUTES, RouteValueProps } from 'client/routing';
 
-import './navigation.css';
+import './Navigation.css';
 
 const NavigationLink: React.FC<RouteValueProps> = ({ path, title }) => (
 	<li><Link to={path}>{title}</Link></li>

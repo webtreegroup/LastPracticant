@@ -1,33 +1,14 @@
 import React from 'react';
 import { PageComponentProps } from 'client/shared/types';
 import { SigninForm } from './components';
+import { Paper } from 'client/shared/components';
+import { Grid } from '@material-ui/core';
 
 export const Signin: React.FC<PageComponentProps> = React.memo(({ title }) => (
-    <div>
-        <header>
-            {title}
-        </header>
-        <main>
-            <SigninForm />
-        </main>
-    </div>
+	<Grid className="home" container justify="center" alignItems="center">
+		<Paper sizes="small" className="auth-formbox">
+			<h1 className="auth-header">{title}</h1>
+			<SigninForm />
+		</Paper>
+	</Grid>
 ));
-// import { PageComponentProps } from 'shared/types';
-// import { Link } from 'react-router-dom';
-// import { ROUTES } from 'routing';
-
-
-// export const Signin: React.FC<PageComponentProps> = ({ title }) => (
-// 	<div className="page-container">
-// 		<div className="auth-container">
-// 			<h1 className="auth-header">{title}</h1>
-// 			<form>
-// 				<input placeholder="Логин" className="form-input_primary"></input>
-// 				<input placeholder="Пароль" className="form-input_primary"></input>
-// 				<input value="Авторизоваться" type="submit" className="primary-button" />
-// 			</form>
-// 			<Link to={ROUTES.SIGNUP.path} className="help-button">Нет аккаунта?</Link>
-// 		</div>
-// 	</div>
-
-// );

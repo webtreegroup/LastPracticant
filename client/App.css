@@ -4,16 +4,13 @@
 #root {
     height: inherit;
     display: flex;
+    background: #fff1;
 }
 
 body {
     background: url("./shared/images/background.png") center/cover no-repeat;
     margin: 0;
     font-family: sans-serif;
-}
-
-#root {
-    background: #fff1;
 }
 
 ul {
