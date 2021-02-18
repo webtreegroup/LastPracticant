@@ -1,8 +1,11 @@
-import { InputControl } from 'client/shared/components';
+import { Button, InputControl } from 'client/shared/components';
 import { AuthAPI, SigninProps } from 'client/core/api';
 import React, { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { SIGNIN_FORM_CONTROLS } from './SigninForm.config';
+import { Link } from 'react-router-dom';
+import { ROUTES } from 'client/routing';
+import { AUTHORIZE, NO_ACCOUNT } from 'client/shared/consts';
 
 export const SigninForm: React.FC = React.memo(() => {
     const {
@@ -30,6 +33,7 @@ export const SigninForm: React.FC = React.memo(() => {
                 ref={register({ required, pattern })}
                 error={errors[fieldName]}
                 errorMessage={errorMessage}
+                className="form-input_primary"
             />
         );
     }), [errors]);
@@ -38,7 +42,8 @@ export const SigninForm: React.FC = React.memo(() => {
         <form onSubmit={handleSubmit(onSubmit)}>
             {controls}
 
-            <input type="submit" />
+            <Button type="submit" variant="outlined" children={AUTHORIZE} className="btn btn_primary btn_wide" />
+            <Link to={ROUTES.SIGNUP.path} className="btn btn_link">{NO_ACCOUNT}</Link>
         </form>
     );
 });
