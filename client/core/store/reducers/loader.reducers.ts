@@ -1,4 +1,5 @@
-import { ActionProps, HIDE_LOADER, SHOW_LOADER } from '../actions';
+import { ActionProps } from '../actions/actions.types';
+import { HIDE_LOADER, SHOW_LOADER } from '../actions/loader.actions';
 
 const initialState: boolean = false;
 

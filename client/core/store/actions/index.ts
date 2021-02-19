@@ -1,2 +1,1 @@
-export * from './loader';
-export * from './actions.types';
+export * from './auth.actions';
