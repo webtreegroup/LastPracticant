@@ -36,7 +36,7 @@ ul {
     height: 100vh;
 }
 
-.auth-formbox {
+#root .MuiPaper-root {
     background: var(--panel-background);
     box-shadow: 0 8px 10px var(--panel-shadow-1), 0 3px 14px var(--panel-shadow-2), 0 5px 5px var(--panel-shadow-3);
     padding: 24px 16px;
@@ -56,7 +56,7 @@ ul {
     margin: 16px 0;
 }
 
-.auth-header {
+.auth-pannel__title {
     color: var(--header-color);
     font-size: 24px;
     margin-bottom: 16px;
@@ -83,7 +83,7 @@ ul {
     font-weight: 500;
 
     &_primary {
-        background-color: var(--primary-color);
+        background-color: var(--primary-color) !important;
         color: #000;
         margin: 16px 0;
     }
