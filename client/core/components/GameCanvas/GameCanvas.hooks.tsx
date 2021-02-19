@@ -22,6 +22,10 @@ export const useCanvas = (drawCanvas: DrawCanvasFn, resources?: string | string[
         let keyPress: string | null;
         const handleHeroAction = (e: KeyboardEvent) => {
             keyPress = e.code;
+
+            if (!['ArrowUp', 'ArrowDown'].includes(e.code)) {
+                e.preventDefault();
+            }
         };
         document.addEventListener('keydown', handleHeroAction, false);
 
