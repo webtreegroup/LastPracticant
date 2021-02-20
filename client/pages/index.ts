@@ -5,4 +5,6 @@ export * from './Forum';
 export * from './Game';
 export * from './Leaderboard';
 export * from './ErrorPage';
+export * from './Landing';
 export * from './Home';
+
