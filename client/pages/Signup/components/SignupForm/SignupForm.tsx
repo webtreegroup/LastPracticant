@@ -37,9 +37,6 @@ export const SignupForm: React.FC = React.memo(() => {
                 ref={register({ required, pattern })}
                 error={errors[fieldName]}
                 errorMessage={errorMessage}
-                className={classnames(
-                    'form-input_primary',
-                )}
             />
         );
     }), [errors]);
