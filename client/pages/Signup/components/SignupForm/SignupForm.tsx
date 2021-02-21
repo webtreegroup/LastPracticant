@@ -48,7 +48,7 @@ export const SignupForm: React.FC = React.memo(() => {
         <form onSubmit={handleSubmit(onSubmit)}>
             {controls}
 
-            <Button type="submit" variant="outlined" className="btn btn_primary btn_wide">
+            <Button type="submit" variant="contained" color="secondary">
                 {REGISTER}
             </Button>
         </form>
