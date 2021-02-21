@@ -6,8 +6,14 @@ export interface CanvasResourcesProps {
     [key: string]: string
 }
 
+interface LoadStatusesProps {
+    [key: string]: boolean
+}
+
 export class ResourcesLoader {
     static _resources: ResourcesProps = {};
+
+    static _loadStatuses: LoadStatusesProps = {};
 
     static _renderCanvas: Function;
 
@@ -20,10 +26,11 @@ export class ResourcesLoader {
     static _load(key: string, url: string) {
         const img = new Image();
         img.src = url;
-        // this._resources[key] = null;
+        this._loadStatuses[key] = false;
 
         img.onload = () => {
             this._resources[key] = img;
+            this._loadStatuses[key] = true;
 
             if (this.isReady()) {
                 this._renderCanvas(this._resources);
@@ -34,8 +41,8 @@ export class ResourcesLoader {
     static isReady() {
         let ready = true;
 
-        Object.keys(this._resources).forEach((key) => {
-            if (!this._resources[key]) ready = false;
+        Object.keys(this._loadStatuses).forEach((key) => {
+            if (!this._loadStatuses[key]) ready = false;
         });
 
         return ready;

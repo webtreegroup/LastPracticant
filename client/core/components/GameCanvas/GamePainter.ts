@@ -20,9 +20,7 @@ interface MoveProps {
     [key: string]: MoveOptionsProps
 }
 
-export interface DrawCanvasPartProps extends DrawCanvasProps {
-    resources: ResourcesProps
-}
+export interface DrawCanvasPartProps extends DrawCanvasProps {}
 
 export class GamePainter {
     move: MoveProps = {
@@ -39,6 +37,8 @@ export class GamePainter {
             height: 0,
         },
     };
+
+    explosionShift = 0;
 
     heroPositionXY = 210;
 
@@ -72,13 +72,57 @@ export class GamePainter {
         resources,
         shift = 0,
     }: DrawCanvasPartProps) {
-        const bg = resources.bg5;
-        const calculateShift = shift % (bg.width / 2);
+        if (!resources) return;
 
-        ctx.drawImage(bg, 0 - calculateShift, 0, bg.width, ctx.canvas.height);
+        const { bg5 } = resources;
+
+        const calculateShift = shift % (bg5.width / 2);
+
+        ctx.drawImage(bg5, 0 - calculateShift, 0, bg5.width, ctx.canvas.height);
+    }
+
+    drawLifes({
+        ctx,
+        resources,
+    }: DrawCanvasPartProps) {
+        if (!resources) return;
+
+        const { life } = resources;
+
+        for (let i = 1; i <= 3; i++) {
+            ctx.drawImage(life, 50 * i - 20, 30, 40, 35);
+        }
+    }
+
+    drawIdeas({
+        ctx,
+        resources,
+    }: DrawCanvasPartProps) {
+        if (!resources) return;
+
+        const { idea } = resources;
+
+        for (let i = 1; i <= 3; i++) {
+            ctx.drawImage(idea, 50 * i - 20, 80, 40, 35);
+        }
+    }
+
+    drawExplosion({
+        ctx,
+        resources,
+    }: DrawCanvasPartProps) {
+        if (!resources) return;
+
+        const { explosion } = resources;
+
+        this.explosionShift = (this.explosionShift === 920 ? 0 : this.explosionShift + 184);
+
+        ctx.drawImage(explosion, this.explosionShift, 0, 184, 120, 0, 0, 184, 120);
     }
 
     drawHero({ ctx, resources, keyPress }: DrawCanvasPartProps) {
+        if (!resources) return;
+
         const { hero } = resources;
 
         if (keyPress === CONTROLS.jump) {
@@ -118,24 +162,17 @@ export class GamePainter {
         );
     }
 
-    drawCanvas({
-        ctx,
-        resources,
-        ...restOptions
-    }: DrawCanvasProps) {
+    drawCanvas(options: DrawCanvasProps) {
+        const { ctx, resources } = options;
+
         if (!resources) return;
 
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-        this.drawBg({
-            ctx,
-            resources,
-            ...restOptions,
-        });
-        this.drawHero({
-            ctx,
-            resources,
-            ...restOptions,
-        });
+        this.drawBg(options);
+        this.drawHero(options);
+        this.drawLifes(options);
+        this.drawIdeas(options);
+        this.drawExplosion(options);
     }
 }
