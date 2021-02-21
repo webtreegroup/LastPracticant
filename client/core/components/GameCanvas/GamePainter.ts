@@ -1,11 +1,12 @@
 import { CONTROLS } from './GameCanvas.config';
+import { ResourcesProps } from './ResourcesLoader';
 
 export interface DrawCanvasProps {
     ctx: CanvasRenderingContext2D
     frameCount: number
     keyPress?: string | null
     shift?: number
-    resources?: HTMLImageElement[]
+    resources?: ResourcesProps
 }
 
 interface MoveOptionsProps {
@@ -19,8 +20,8 @@ interface MoveProps {
     [key: string]: MoveOptionsProps
 }
 
-export interface DrawCanvasPartProps extends Omit<DrawCanvasProps, 'resources'> {
-    resource: HTMLImageElement
+export interface DrawCanvasPartProps extends DrawCanvasProps {
+    resources: ResourcesProps
 }
 
 export class GamePainter {
@@ -68,15 +69,18 @@ export class GamePainter {
 
     drawBg({
         ctx,
-        resource,
+        resources,
         shift = 0,
     }: DrawCanvasPartProps) {
-        const calculateShift = shift % (resource.width / 2);
+        const bg = resources.bg5;
+        const calculateShift = shift % (bg.width / 2);
 
-        ctx.drawImage(resource, 0 - calculateShift, 0, resource.width, ctx.canvas.height);
+        ctx.drawImage(bg, 0 - calculateShift, 0, bg.width, ctx.canvas.height);
     }
 
-    drawHero({ ctx, resource, keyPress }: DrawCanvasPartProps) {
+    drawHero({ ctx, resources, keyPress }: DrawCanvasPartProps) {
+        const { hero } = resources;
+
         if (keyPress === CONTROLS.jump) {
             if (!this.move.down.pressed) this.move.jump.pressed = true;
         }
@@ -106,7 +110,7 @@ export class GamePainter {
         );
 
         ctx.drawImage(
-            resource,
+            hero,
             this.heroPositionXY,
             heroPositionY,
             this.heroSizes.width,
@@ -116,28 +120,22 @@ export class GamePainter {
 
     drawCanvas({
         ctx,
-        shift,
         resources,
-        keyPress,
-        frameCount,
+        ...restOptions
     }: DrawCanvasProps) {
-        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         if (!resources) return;
 
-        const [bg5, hero] = resources;
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
         this.drawBg({
             ctx,
-            shift,
-            resource: bg5,
-            frameCount,
+            resources,
+            ...restOptions,
         });
         this.drawHero({
             ctx,
-            shift,
-            resource: hero,
-            keyPress,
-            frameCount,
+            resources,
+            ...restOptions,
         });
     }
 }
