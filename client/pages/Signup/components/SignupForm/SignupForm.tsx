@@ -4,7 +4,6 @@ import React, { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { REGISTER } from 'client/shared/consts';
 import { Button } from '@material-ui/core';
-import classnames from 'classnames';
 import { SIGNUP_FORM_CONTROLS } from './SignupForm.config';
 
 export const SignupForm: React.FC = React.memo(() => {

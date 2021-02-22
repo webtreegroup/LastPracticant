@@ -9,6 +9,9 @@ import {
     useDispatch,
 } from 'react-redux';
 import { hideLoaderAction, showLoaderAction } from 'client/core/store/actions/loader.actions';
+import bem from 'bem-cn';
+
+const block = bem('home');
 
 export const Home: React.FC<PageComponentProps> = React.memo(() => {
     const dispatch = useDispatch();
@@ -23,7 +26,12 @@ export const Home: React.FC<PageComponentProps> = React.memo(() => {
     };
 
     return (
-        <Grid className="home" container justify="center" alignItems="center">
+        <Grid
+            className={block()}
+            container
+            justify="center"
+            alignItems="center"
+        >
             <Paper sizes="small">
                 <Navigation />
 
@@ -31,7 +39,6 @@ export const Home: React.FC<PageComponentProps> = React.memo(() => {
                     variant="contained"
                     color="secondary"
                     onClick={handleShowLoader}
-                    className="game-start__toggle"
                 >
                     Показать лоадер
                 </Button>
