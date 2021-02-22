@@ -1,20 +1,24 @@
 import { InputControl } from 'client/shared/components';
-import { AuthAPI, SigninProps } from 'client/core/api';
+import { SigninProps } from 'client/core/api';
 import React, { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { ROUTES } from 'client/routing';
 import { AUTHORIZE, NO_ACCOUNT } from 'client/shared/consts';
 import { Button } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
+import { thunkLogin } from 'client/core/store';
 import { SIGNIN_FORM_CONTROLS } from './SigninForm.config';
 
 export const SigninForm: React.FC = React.memo(() => {
+    const dispatch = useDispatch();
+
     const {
         register, handleSubmit, errors,
     } = useForm<SigninProps>();
 
     const onSubmit = (data: SigninProps) => {
-        AuthAPI.signin(data);
+        dispatch(thunkLogin(data));
     };
 
     const controls = useMemo(() => SIGNIN_FORM_CONTROLS.map(({
