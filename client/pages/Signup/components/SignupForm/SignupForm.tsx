@@ -2,6 +2,9 @@ import { InputControl } from 'client/shared/components';
 import { AuthAPI, SignupProps } from 'client/core/api';
 import React, { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
+import { REGISTER } from 'client/shared/consts';
+import { Button } from '@material-ui/core';
+import classnames from 'classnames';
 import { SIGNUP_FORM_CONTROLS } from './SignupForm.config';
 
 export const SignupForm: React.FC = React.memo(() => {
@@ -42,7 +45,9 @@ export const SignupForm: React.FC = React.memo(() => {
         <form onSubmit={handleSubmit(onSubmit)}>
             {controls}
 
-            <input type="submit" />
+            <Button type="submit" variant="contained" color="secondary">
+                {REGISTER}
+            </Button>
         </form>
     );
 });

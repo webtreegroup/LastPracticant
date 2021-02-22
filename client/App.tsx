@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-	BrowserRouter,
+    BrowserRouter,
 } from 'react-router-dom';
 import { Routing } from 'client/routing/Routing';
 import { createMuiTheme } from '@material-ui/core/styles';
@@ -11,14 +11,14 @@ import './shared/styles/theme.css';
 import './App.css';
 
 const theme = createMuiTheme({
-  palette: {
-	type: "dark",
-    primary: {
-		light: red[50],
-		main: red[500],
-		dark: red[700]
+    palette: {
+        type: 'dark',
+        primary: {
+            light: red[50],
+            main: red[500],
+            dark: red[700],
+        },
     },
-  },
 });
 export const App: React.FC = () => (
 	<ThemeProvider theme={theme}>
