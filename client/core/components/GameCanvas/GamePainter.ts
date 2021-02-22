@@ -20,6 +20,11 @@ interface MoveProps {
     [key: string]: MoveOptionsProps
 }
 
+interface ShoteProps {
+    x: number
+    y: number
+}
+
 export interface DrawCanvasPartProps extends DrawCanvasProps {}
 
 export class GamePainter {
@@ -41,13 +46,18 @@ export class GamePainter {
     explosion = {
         shiftX: 0,
         shiftY: 0,
+        width: 120,
+        height: 90,
     };
 
     heroPositionXY = 210;
 
-    heroSizes = {
+    hero = {
         width: 75,
         height: 80,
+        lifes: 3,
+        ideas: 3,
+        shotes: [] as ShoteProps[],
     };
 
     constructor() {
@@ -92,7 +102,7 @@ export class GamePainter {
 
         const { life } = resources;
 
-        for (let i = 1; i <= 3; i++) {
+        for (let i = 1; i <= this.hero.lifes; i++) {
             ctx.drawImage(life, 50 * i - 20, 30, 40, 35);
         }
     }
@@ -105,7 +115,7 @@ export class GamePainter {
 
         const { idea } = resources;
 
-        for (let i = 1; i <= 3; i++) {
+        for (let i = 1; i <= this.hero.ideas; i++) {
             ctx.drawImage(idea, 50 * i - 20, 80, 40, 35);
         }
     }
@@ -146,12 +156,34 @@ export class GamePainter {
             frameHeight,
             500,
             ctx.canvas.height - this.heroPositionXY,
-            120,
-            90,
+            this.explosion.width,
+            this.explosion.height,
         );
     }
 
-    drawHero({ ctx, resources, keyPress }: DrawCanvasPartProps) {
+    drawShote({ ctx, resources }: DrawCanvasPartProps) {
+        if (!resources) return;
+
+        const { idea } = resources;
+
+        this.hero.shotes.forEach((shote, index) => {
+            ctx.drawImage(
+                idea,
+                shote.x,
+                shote.y,
+                30,
+                30,
+            );
+
+            this.hero.shotes[index].x += 5;
+        });
+    }
+
+    drawHero({
+        ctx,
+        resources,
+        keyPress,
+    }: DrawCanvasPartProps) {
         if (!resources) return;
 
         const { hero } = resources;
@@ -188,9 +220,16 @@ export class GamePainter {
             hero,
             this.heroPositionXY,
             heroPositionY,
-            this.heroSizes.width,
-            this.heroSizes.height,
+            this.hero.width,
+            this.hero.height,
         );
+
+        if (keyPress === CONTROLS.shote) {
+            this.hero.shotes.push({
+                x: this.heroPositionXY + this.hero.width,
+                y: ctx.canvas.height - this.heroPositionXY + 35,
+            });
+        }
     }
 
     drawCanvas(options: DrawCanvasProps) {
@@ -205,5 +244,6 @@ export class GamePainter {
         this.drawLifes(options);
         this.drawIdeas(options);
         this.drawExplosion(options);
+        this.drawShote(options);
     }
 }
