@@ -17,11 +17,7 @@ export const Loader: FC<LoaderProps> = memo(
         className,
         isVisible,
     }) => (
-        <div
-            className={block(
-                { visible: isVisible },
-            ).mix(className)}
-        >
+        <div className={block({ visible: isVisible }).mix(className)}>
             <NivelatorXY>
                 <img src={loader} alt="loader" />
             </NivelatorXY>
