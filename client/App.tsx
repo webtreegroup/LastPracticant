@@ -12,7 +12,7 @@ import { red } from '@material-ui/core/colors';
 import './shared/styles/theme.css';
 import { useSelector } from 'react-redux';
 import { Loader } from './shared/components';
-import { StoreProps } from './core/store';
+import { loaderSelector } from './core/store/selectors';
 
 const theme = createMuiTheme({
     palette: {
@@ -26,9 +26,7 @@ const theme = createMuiTheme({
 });
 
 export const App: React.FC = () => {
-    const loader = useSelector((store: StoreProps) => ({
-        isVisible: store.loader,
-    }));
+    const loader = useSelector(loaderSelector);
 
     return (
         <ThemeProvider theme={theme}>
