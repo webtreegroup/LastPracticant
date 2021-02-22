@@ -39,7 +39,6 @@ export class GamePainter {
     };
 
     explosion = {
-        tickCounter: 0,
         shiftX: 0,
         shiftY: 0,
     };
@@ -119,20 +118,14 @@ export class GamePainter {
 
         const { explosion } = resources;
 
-        /** Длина за вычетом 1 кадра. Полная длина 1556. */
-        const spriteWidth = 1244.8;
+        /** Длина за вычетом 1 кадра. Полная длина 1500. */
+        const spriteWidth = 1200;
         /** Длина кадра. */
-        const frameWidth = 311.2;
-        /** Высота за вычетом 1 кадра. Полная высота 971. */
-        const spriteHeight = 776.8;
+        const frameWidth = 300;
+        /** Высота за вычетом 1 кадра. Полная высота 1000. */
+        const spriteHeight = 800;
         /** Высота кадра. */
-        const frameHeight = 194.2;
-
-        if (this.explosion.tickCounter < 20) {
-            this.explosion.tickCounter++;
-
-            return;
-        }
+        const frameHeight = 200;
 
         if (this.explosion.shiftX === spriteWidth) {
             this.explosion.shiftX = 0;
@@ -156,7 +149,6 @@ export class GamePainter {
             120,
             90,
         );
-        this.explosion.tickCounter = 0;
     }
 
     drawHero({ ctx, resources, keyPress }: DrawCanvasPartProps) {
