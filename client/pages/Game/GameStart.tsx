@@ -29,6 +29,7 @@ export const GameStart: React.FC<PageComponentProps> = React.memo(() => {
                             <div className={block('control')}>
                                 <p>Прыгнуть - стрелка вверх</p>
                                 <p>Присесть - стрелка вниз</p>
+                                <p>Выстрел - пробел</p>
                             </div>
 
                             <Button
