@@ -25,6 +25,11 @@ interface ShoteProps {
     y: number
 }
 
+interface EnemiesProps {
+    x: number
+    y: number
+}
+
 export interface DrawCanvasPartProps extends DrawCanvasProps {}
 
 export class GamePainter {
@@ -50,13 +55,25 @@ export class GamePainter {
         height: 90,
     };
 
-    heroPositionXY = 210;
+    enemies = {
+        tickCounter: 0,
+        set: [] as EnemiesProps[],
+    };
 
     hero = {
         width: 75,
         height: 80,
+        position: {
+            x: 210,
+            y: 210,
+        },
+        currentPosition: {
+            x: 0,
+            y: 0,
+        },
         lifes: 3,
         ideas: 3,
+        bulletSpeed: 5,
         shotes: [] as ShoteProps[],
     };
 
@@ -120,6 +137,35 @@ export class GamePainter {
         }
     }
 
+    // TODO: доработать в LP-41
+    drawEnemies({
+        ctx,
+        resources,
+    }: DrawCanvasPartProps) {
+        if (!resources) return;
+
+        const { enemies } = resources;
+
+        this.enemies.set.forEach((enemy) => {
+            ctx.drawImage(enemies, 0, 0, 90, 90, enemy.x, enemy.y, 90, 90);
+        });
+
+        if (this.enemies.tickCounter < 100) {
+            this.enemies.tickCounter++;
+
+            this.enemies.set.push({
+                x: 300,
+                y: ctx.canvas.height - this.hero.position.y,
+            });
+        }
+
+        this.enemies.tickCounter = 0;
+
+        if (this.enemies.set.length > 20) {
+            this.enemies.set = [];
+        }
+    }
+
     drawExplosion({
         ctx,
         resources,
@@ -155,7 +201,7 @@ export class GamePainter {
             frameWidth,
             frameHeight,
             500,
-            ctx.canvas.height - this.heroPositionXY,
+            ctx.canvas.height - this.hero.position.x,
             this.explosion.width,
             this.explosion.height,
         );
@@ -175,7 +221,7 @@ export class GamePainter {
                 30,
             );
 
-            this.hero.shotes[index].x += 5;
+            this.hero.shotes[index].x += this.hero.bulletSpeed;
         });
     }
 
@@ -212,22 +258,22 @@ export class GamePainter {
             this.resetHeroMove('down');
         }
 
-        const heroPositionY = (
-            ctx.canvas.height - this.heroPositionXY - this.move.jump.height + this.move.down.height
+        this.hero.currentPosition.y = (
+            ctx.canvas.height - this.hero.position.y - this.move.jump.height + this.move.down.height
         );
 
         ctx.drawImage(
             hero,
-            this.heroPositionXY,
-            heroPositionY,
+            this.hero.position.x,
+            this.hero.currentPosition.y,
             this.hero.width,
             this.hero.height,
         );
 
         if (keyPress === CONTROLS.shote) {
             this.hero.shotes.push({
-                x: this.heroPositionXY + this.hero.width,
-                y: ctx.canvas.height - this.heroPositionXY + 35,
+                x: this.hero.position.x + this.hero.width,
+                y: this.hero.currentPosition.y + 35,
             });
         }
     }
@@ -245,5 +291,6 @@ export class GamePainter {
         this.drawIdeas(options);
         this.drawExplosion(options);
         this.drawShote(options);
+        this.drawEnemies(options);
     }
 }
