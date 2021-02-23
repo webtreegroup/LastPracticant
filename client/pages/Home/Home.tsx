@@ -8,16 +8,17 @@ import {
 } from 'react-redux';
 import { hideLoaderAction, showLoaderAction } from 'client/core/store/actions/loader.actions';
 import bem from 'bem-cn';
-import { RECORD, EXIT, LAST_PRACTICANT } from 'client/shared/consts';
+import { RECORD, EXIT } from 'client/shared/consts';
 import { ROUTES } from 'client/routing';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { AuthAPI } from 'client/core/api';
 
 
 const block = bem('home');
 
 export const Home: React.FC<PageComponentProps> = React.memo(() => {
     const dispatch = useDispatch();
-    console.log(block("header"))
+    const history = useHistory();
 
     /** TODO: просто для примера, потом убрать */
     const handleShowLoader = () => {
@@ -28,9 +29,14 @@ export const Home: React.FC<PageComponentProps> = React.memo(() => {
         }, 2000);
     };
 
+    const handleLogout = () => {
+        AuthAPI.logout();
+        history.push(ROUTES.SIGNIN.path);
+    };
+
     return (
         <NivelatorXY className={block()} >
-            <h1 className={block('header')}>{ LAST_PRACTICANT }</h1>
+            <div className={block('header')}></div>
             <Paper className={block('paper')} sizes="small">
                 <div className={block('userdata')}>
                     <div className="home__avatar_small" />
@@ -48,6 +54,7 @@ export const Home: React.FC<PageComponentProps> = React.memo(() => {
                     <Button
                         variant="contained"
                         color="secondary"
+                        onClick={handleLogout}
                     >
                         {EXIT}
                     </Button>

@@ -8,4 +8,3 @@ export const BACK = 'Назад';
 export const AVATAR_DEFAULT = 'LP';
 export const RECORD = "Рекорд";
 export const EXIT = "Выйти";
-export const LAST_PRACTICANT = "Последний практикант";
