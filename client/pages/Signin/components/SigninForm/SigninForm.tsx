@@ -1,29 +1,25 @@
 import { InputControl } from 'client/shared/components';
-import { AuthAPI, SignupProps } from 'client/core/api';
+import { SigninProps } from 'client/core/api';
 import React, { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
-import { REGISTER, GRID_SPACE } from 'client/shared/consts';
+import { Link } from 'react-router-dom';
+import { ROUTES } from 'client/routing';
+import { AUTHORIZE, NO_ACCOUNT, GRID_SPACE } from 'client/shared/consts';
 import { Button, Grid } from '@material-ui/core';
-import { SIGNUP_FORM_CONTROLS } from './SignupForm.config';
+import { useDispatch } from 'react-redux';
+import { thunkLogin } from 'client/core/store';
+import { SIGNIN_FORM_CONTROLS } from './SigninForm.config';
 
-export const SignupForm: React.FC = React.memo(() => {
-    const {
-        control,
-        handleSubmit,
-        errors,
-        setError,
-    } = useForm<SignupProps>();
+export const SigninForm: React.FC = React.memo(() => {
+    const { control, handleSubmit, errors } = useForm<SigninProps>();
+    const dispatch = useDispatch();
 
-    const onSubmit = (data: SignupProps) => {
-        if (data.password !== data.password_confirm) {
-            setError('password_confirm', { type: 'manual' });
-        } else {
-            AuthAPI.signup(data);
-        }
+    const onSubmit = (data: SigninProps) => {
+        dispatch(thunkLogin(data));
     };
 
     const controls = useMemo(
-        () => SIGNUP_FORM_CONTROLS.map((inputConfig) => {
+        () => SIGNIN_FORM_CONTROLS.map((inputConfig) => {
             const { name } = inputConfig;
             const error = errors[name as keyof typeof errors]?.message;
             return (
@@ -54,9 +50,20 @@ export const SignupForm: React.FC = React.memo(() => {
                     {controls}
                 </Grid>
                 <Grid container item xs={12} justify="center" spacing={1}>
-                    <Button color="primary" type="submit" variant="contained">
-                        {REGISTER}
-                    </Button>
+                    <Grid item>
+                        <Button color="primary" type="submit" variant="contained">
+                            {AUTHORIZE}
+                        </Button>
+                    </Grid>
+                    <Grid item>
+                        <Button
+                            component={Link}
+                            to={ROUTES.SIGNUP.path}
+                            color="primary"
+                        >
+                            {NO_ACCOUNT}
+                        </Button>
+                    </Grid>
                 </Grid>
             </Grid>
         </form>

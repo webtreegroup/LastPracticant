@@ -1,41 +1,45 @@
 import React from 'react';
-import { FieldError } from 'react-hook-form';
-import { ComponentCommonProps } from 'client/shared/types';
-import './InputControl.css';
+import { Control, Controller, RegisterOptions } from 'react-hook-form';
+import { TextField, OutlinedTextFieldProps } from '@material-ui/core';
+import { PatternProps, CHECK_REQUIRED } from 'client/shared/consts';
 
-export interface InputControlProps extends ComponentCommonProps {
-    name: string
-    label?: string
-    error?: FieldError
-    errorMessage?: string
-    type?: string
-    required?: boolean
-    pattern?: RegExp
+export interface InputDataProps {
+    name: string;
+    label: string;
+    control?: Control;
+    pattern?: PatternProps;
+    type?: string;
+    required?: boolean;
 }
 
-const InputControlComponent = React.forwardRef<
-HTMLInputElement,
-InputControlProps
->(
-    (
-        {
-            name,
-            error,
-            errorMessage = 'ошибка',
-            type = 'text',
-        },
-        ref,
-    ) => (
-        <div>
-            <input
-                name={name}
-                ref={ref}
-                id={name}
-                type={type}
-            />
-            <span>{error && errorMessage}</span>
-        </div>
-    ),
-);
+type InputControlProps = InputDataProps & OutlinedTextFieldProps;
 
-export const InputControl = React.memo(InputControlComponent);
+export const InputControl: React.FC<InputControlProps> = React.memo((props) => {
+    const {
+        name,
+        control,
+        type = 'text',
+        required,
+        pattern,
+    } = props;
+    const rules: RegisterOptions = {
+        required: required && CHECK_REQUIRED,
+        pattern,
+    };
+    return (
+        <Controller
+            name={name}
+            control={control}
+            defaultValue=""
+            rules={rules}
+            render={({ onChange, value }) => (
+                <TextField
+                    type={type}
+                    onChange={onChange}
+                    value={value}
+                    {...props}
+                />
+            )}
+        />
+    );
+});

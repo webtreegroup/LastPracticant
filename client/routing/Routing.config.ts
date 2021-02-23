@@ -24,6 +24,14 @@ export const ROUTES: RoutesProps = {
         path: '/profile',
         title: 'Профиль',
     },
+    PROFILE_PASSWORD: {
+        path: '/profile/password',
+        title: 'Изменение пароля',
+    },
+    PROFILE_DATA: {
+        path: '/profile/data',
+        title: 'Изменение данных',
+    },
     FORUM: {
         path: '/forum',
         title: 'Форум',

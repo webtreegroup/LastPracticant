@@ -17,8 +17,8 @@ export interface ResponseProps<T> extends Omit<XMLHttpRequest, 'response'> {
     response: T
 }
 
-export const API_HOST = 'ya-praktikum.tech';
-export const API_BASE_PATH = `https://${API_HOST}/api/v2`;
+export const API_HOST = 'https://ya-praktikum.tech';
+export const API_BASE_PATH = `${API_HOST}/api/v2`;
 
 export function queryStringify<T extends object>(data: T): string {
     if (!data) return '';
@@ -35,26 +35,48 @@ export class HTTP {
         this._path += path;
     }
 
-    get<T>(url: string, options: OptionsWithoutMethodType = {}): Promise<ResponseProps<T>> {
+    get<T>(url: string, options: OptionsWithoutMethodType = {}): Promise<T> {
         return this.request<T>(url, { ...options, method: METHOD.GET });
     }
 
-    post<T>(url: string, options: OptionsWithoutMethodType = {}): Promise<ResponseProps<T>> {
+    post<T>(url: string, options: OptionsWithoutMethodType = {}): Promise<T> {
         return this.request<T>(url, { ...options, method: METHOD.POST });
     }
 
-    put<T>(url: string, options: OptionsWithoutMethodType = {}): Promise<ResponseProps<T>> {
+    put<T>(url: string, options: OptionsWithoutMethodType = {}): Promise<T> {
         return this.request<T>(url, { ...options, method: METHOD.PUT });
     }
 
-    delete<T>(url: string, options: OptionsWithoutMethodType = {}): Promise<ResponseProps<T>> {
+    delete<T>(url: string, options: OptionsWithoutMethodType = {}): Promise<T> {
         return this.request<T>(url, { ...options, method: METHOD.DELETE });
     }
 
     request<T>(
         url: string,
         options: OptionsType = { method: METHOD.GET },
-    ): Promise<ResponseProps<T>> {
+    ): Promise<T> {
+        function serializeBody(method: METHOD, data: T) {
+            if (method === METHOD.GET) {
+                return;
+            }
+            if (data instanceof FormData) {
+                return data;
+            }
+            return JSON.stringify(data);
+        }
+
+        function serializeHeader(method: METHOD, data: T) {
+            if (method === METHOD.GET) {
+                return;
+            }
+            if (data instanceof FormData) {
+                return;
+            }
+            return {
+                'Content-Type': 'application/json',
+            };
+        }
+
         const { method, data, responseFormat = 'json' } = options;
 
         const defaultReject = (response: Response) => {
@@ -74,10 +96,8 @@ export class HTTP {
             method,
             mode: 'cors',
             credentials: 'include',
-            body: method !== METHOD.GET ? JSON.stringify(data) : data,
-            headers: method !== METHOD.GET ? {
-                'Content-Type': 'application/json',
-            } : undefined,
+            body: serializeBody(method, data),
+            headers: serializeHeader(method, data),
         })
             .then((response) => {
                 if (!response.ok) {

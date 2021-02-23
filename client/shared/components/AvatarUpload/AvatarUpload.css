@@ -1,0 +1,8 @@
+.upload-avatar {
+    border-radius: 100%;
+    cursor: pointer;
+
+    input {
+        display: none;
+    }
+}
