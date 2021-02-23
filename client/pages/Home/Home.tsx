@@ -17,6 +17,7 @@ const block = bem('home');
 
 export const Home: React.FC<PageComponentProps> = React.memo(() => {
     const dispatch = useDispatch();
+    console.log(block("header"))
 
     /** TODO: просто для примера, потом убрать */
     const handleShowLoader = () => {
@@ -29,15 +30,15 @@ export const Home: React.FC<PageComponentProps> = React.memo(() => {
 
     return (
         <NivelatorXY className={block()} >
-            <h1 className="home__header">{ LAST_PRACTICANT }</h1>
-            <Paper className="home__paper" sizes="small">
-                <div className="home__userdata">
+            <h1 className={block('header')}>{ LAST_PRACTICANT }</h1>
+            <Paper className={block('paper')} sizes="small">
+                <div className={block('userdata')}>
                     <div className="home__avatar_small" />
-                    <p className="home__username">username</p>
-                    <p className="home__user-result">{RECORD}: result</p>
+                    <p className={block('username')}>username</p>
+                    <p className={block('user-result')}>{RECORD}: result</p>
                 </div>
                 <Divider />
-                <List className="home__navigation-items">
+                <List className={block('navigation-items').toString()}>
                     <ListItem><Link to={ROUTES.GAME_START.path}>{ROUTES.GAME_START.title}</Link></ListItem>
                     <ListItem><Link to={ROUTES.PROFILE.path}>{ROUTES.PROFILE.title}</Link></ListItem>
                     <ListItem><Link to={ROUTES.LEADERBOARD.path}>{ROUTES.LEADERBOARD.title}</Link></ListItem>
