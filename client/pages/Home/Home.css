@@ -2,16 +2,16 @@
     height: 40px;
     width: 40px;
     border-radius: 50%;
-    background-color: rgb(207, 207, 207);
-    margin-bottom: 12px;
+    background-color: #cfcfcf;
+    margin-bottom: var(--space-sm);
 }
 
 .home__navigation-items {
-    padding: 22px 0 16px;
+    padding: var(--space-md) 0 var(--space-sm);
 }
 
 .home__navigation-items li {
-    padding: 6px;
+    padding: var(--space-xs);
 }
 
 .home__navigation-items li:hover {
@@ -20,26 +20,32 @@
 }
 
 .home__navigation-items li a {
-    padding: 6px 0;
+    padding: var(--space-xs) 0;
     text-decoration: none;
     color: #fff;
     width: 100%;
 }
 
-.divider {
-    height: 1px;
-    background-color: #ffffff1a;
-}
-
 .home__paper {
-    padding: 22px;
+    padding: var(--space-md);
 }
 
 .home__userdata {
-    padding: 0 6px 22px;
+    padding: 0 var(--space-xs) var(--space-md);
 }
 
 .home__username {
     font-size: 18px;
     font-weight: 600;
+}
+
+.home__user-result {
+    font-size: 12px;
+    opacity: 0.6;
+}
+
+.home__header {
+    font-size: 16px;
+    text-transform: uppercase;
+    margin: var(--space-md);
 }

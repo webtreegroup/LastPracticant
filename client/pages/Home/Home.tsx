@@ -1,14 +1,14 @@
 import React from 'react';
 import { PageComponentProps } from 'client/shared/types';
 import './Home.css';
-import { ButtonsToolbar, Paper } from 'client/shared/components';
-import { Button, Grid } from '@material-ui/core';
+import { ButtonsToolbar, NivelatorXY, Paper } from 'client/shared/components';
+import { Button, Divider, List, ListItem } from '@material-ui/core';
 import {
     useDispatch,
 } from 'react-redux';
 import { hideLoaderAction, showLoaderAction } from 'client/core/store/actions/loader.actions';
 import bem from 'bem-cn';
-import { RECORD, EXIT } from 'client/shared/consts';
+import { RECORD, EXIT, LAST_PRACTICANT } from 'client/shared/consts';
 import { ROUTES } from 'client/routing';
 import { Link } from 'react-router-dom';
 
@@ -28,20 +28,21 @@ export const Home: React.FC<PageComponentProps> = React.memo(() => {
     };
 
     return (
-        <Grid className={block()} container justify='center' alignItems='center'>
-            <Paper className='home__paper' sizes='small'>
-                <div className='home__userdata'>
-                    <div className='home__avatar_small' />
-                    <p className='home__username'>username</p>
-                    <p className='home__user-result'>{RECORD}: result</p>
+        <NivelatorXY className={block()} >
+            <h1 className="home__header">{ LAST_PRACTICANT }</h1>
+            <Paper className="home__paper" sizes="small">
+                <div className="home__userdata">
+                    <div className="home__avatar_small" />
+                    <p className="home__username">username</p>
+                    <p className="home__user-result">{RECORD}: result</p>
                 </div>
-                <div className='divider' />
-                <ul className='home__navigation-items'>
-                    <li><Link to={ROUTES.GAME_START.path}>{ROUTES.GAME_START.title}</Link></li>
-                    <li><Link to={ROUTES.PROFILE.path}>{ROUTES.PROFILE.title}</Link></li>
-                    <li><Link to={ROUTES.LEADERBOARD.path}>{ROUTES.LEADERBOARD.title}</Link></li>
-                    <li><Link to={ROUTES.FORUM.path}>{ROUTES.FORUM.title}</Link></li>
-                </ul>
+                <Divider />
+                <List className="home__navigation-items">
+                    <ListItem><Link to={ROUTES.GAME_START.path}>{ROUTES.GAME_START.title}</Link></ListItem>
+                    <ListItem><Link to={ROUTES.PROFILE.path}>{ROUTES.PROFILE.title}</Link></ListItem>
+                    <ListItem><Link to={ROUTES.LEADERBOARD.path}>{ROUTES.LEADERBOARD.title}</Link></ListItem>
+                    <ListItem><Link to={ROUTES.FORUM.path}>{ROUTES.FORUM.title}</Link></ListItem>
+                </List>
                 <ButtonsToolbar justify="center">
                     <Button
                         variant="contained"
@@ -58,6 +59,6 @@ export const Home: React.FC<PageComponentProps> = React.memo(() => {
                 </Button>
                 </ButtonsToolbar>
             </Paper>
-        </Grid>
+        </NivelatorXY>
     )
 });
