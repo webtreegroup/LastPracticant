@@ -35,11 +35,11 @@ export const Home: React.FC<PageComponentProps> = React.memo(() => {
     };
 
     return (
-        <NivelatorXY className={block()} >
+        <NivelatorXY className={block()}>
             <div className={block('header')}></div>
             <Paper className={block('paper')} sizes="small">
                 <div className={block('userdata')}>
-                    <div className="home__avatar_small" />
+                    <div className={block('avatar', { small: true })} />
                     <p className={block('username')}>username</p>
                     <p className={block('user-result')}>{RECORD}: result</p>
                 </div>
