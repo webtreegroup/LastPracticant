@@ -1,3 +1,56 @@
 .home {
-    background: url(./home-bg.png) #000 no-repeat center/cover;
+    &__avatar {
+        &_small {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            background-color: #cfcfcf;
+            margin-bottom: var(--space-sm);
+        }
+    }
+
+    &__navigation-items {
+        padding: var(--space-md) 0 var(--space-sm);
+
+        li {
+            padding: var(--space-xs);
+
+            a {
+                padding: var(--space-xs) 0;
+                text-decoration: none;
+                color: #fff;
+                width: 100%;
+            }
+        }
+
+        li:hover {
+            background-color: #ffffff1a;
+            cursor: pointer;
+        }
+    }
+
+    &__paper {
+        padding: var(--space-md);
+    }
+
+    &__userdata {
+        padding: 0 var(--space-xs) var(--space-md);
+    }
+
+    &__username {
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    &__user-result {
+        font-size: 12px;
+        opacity: 0.6;
+    }
+
+    &__header {
+        width: 334px;
+        height: 30px;
+        margin: var(--space-lg);
+        background: url(./game-name.png) no-repeat center/cover;
+    }
 }

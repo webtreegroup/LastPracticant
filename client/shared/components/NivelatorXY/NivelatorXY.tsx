@@ -16,6 +16,7 @@ export const NivelatorXY: FC<ComponentCommonProps> = memo(
             className={block({}).mix(className).toString()}
             justify="center"
             alignItems="center"
+            direction="column"
         >
             {children}
         </Grid>

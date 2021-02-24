@@ -11,12 +11,17 @@ import {
     Home,
     GameStart,
     GameOver,
+    Landing,
 } from '../pages';
 
 import { ROUTES } from './Routing.config';
 
 export const Routing: React.FC = () => (
     <Switch>
+        <Route exact path={ROUTES.LANDING.path}>
+            <Landing title={ROUTES.LANDING.title} />
+        </Route>
+
         <Route exact path={ROUTES.HOME.path}>
             <Home title={ROUTES.HOME.title} />
         </Route>

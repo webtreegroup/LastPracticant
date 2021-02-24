@@ -8,8 +8,12 @@ export interface RouteValueProps {
 }
 
 export const ROUTES: RoutesProps = {
-    HOME: {
+    LANDING: {
         path: '/',
+        title: 'Лендинг',
+    },
+    HOME: {
+        path: '/home',
         title: 'Главная',
     },
     SIGNIN: {
@@ -56,4 +60,5 @@ export const ROUTES: RoutesProps = {
         path: '/leaderboard',
         title: 'Таблица лидеров',
     },
+
 };
