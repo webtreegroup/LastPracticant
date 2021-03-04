@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Link changes the class when hovered 1`] = `
+<div
+  className={
+    Object {
+      "has": [Function],
+      "is": [Function],
+      "mix": [Function],
+      "split": [Function],
+      "state": [Function],
+      "toString": [Function],
+    }
+  }
+>
+  <h2
+    className={
+      Object {
+        "has": [Function],
+        "is": [Function],
+        "mix": [Function],
+        "split": [Function],
+        "state": [Function],
+        "toString": [Function],
+      }
+    }
+  >
+    Test Paper
+  </h2>
+  <section
+    className={
+      Object {
+        "has": [Function],
+        "is": [Function],
+        "mix": [Function],
+        "split": [Function],
+        "state": [Function],
+        "toString": [Function],
+      }
+    }
+  >
+    <span>
+      LP
+    </span>
+  </section>
+</div>
+`;
