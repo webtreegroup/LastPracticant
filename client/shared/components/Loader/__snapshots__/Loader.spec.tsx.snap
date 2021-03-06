@@ -10,7 +10,7 @@ exports[`Loader Render hide Loader component 1`] = `
     >
       <img
         alt="loader"
-        src=""
+        src="[object Object]"
       />
     </div>
   </div>
@@ -27,7 +27,7 @@ exports[`Loader Render show Loader component 1`] = `
     >
       <img
         alt="loader"
-        src=""
+        src="[object Object]"
       />
     </div>
   </div>

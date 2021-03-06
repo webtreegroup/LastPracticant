@@ -15,6 +15,7 @@ describe('ButtonsToolbar', () => {
         const { asFragment } = render(<ButtonsToolbar noMargin />);
         expect(asFragment()).toMatchSnapshot();
     });
+
     it('Render ButtonsToolbar component with noMargin with children', () => {
         const { asFragment } = render(
             <ButtonsToolbar noMargin>
