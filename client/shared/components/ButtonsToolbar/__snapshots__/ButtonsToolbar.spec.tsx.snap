@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ButtonsToolbar Render ButtonsToolbar component no children 1`] = `
+<DocumentFragment>
+  <div
+    class="buttons-toolbar"
+  />
+</DocumentFragment>
+`;
+
+exports[`ButtonsToolbar Render ButtonsToolbar component with noMargin no children 1`] = `
+<DocumentFragment>
+  <div
+    class="buttons-toolbar buttons-toolbar_no-margin"
+  />
+</DocumentFragment>
+`;
+
+exports[`ButtonsToolbar Render ButtonsToolbar component with noMargin with children 1`] = `
+<DocumentFragment>
+  <div
+    class="buttons-toolbar buttons-toolbar_no-margin"
+  >
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="MuiButton-label"
+      >
+        Button 1
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-text"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="MuiButton-label"
+      >
+        Button 2
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
+  </div>
+</DocumentFragment>
+`;

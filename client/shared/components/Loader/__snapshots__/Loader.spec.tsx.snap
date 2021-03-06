@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Loader Render hide Loader component 1`] = `
+<DocumentFragment>
+  <div
+    class="loader"
+  >
+    <div
+      class="MuiGrid-root nivelator-xy MuiGrid-container MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
+    >
+      <img
+        alt="loader"
+        src=""
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Loader Render show Loader component 1`] = `
+<DocumentFragment>
+  <div
+    class="loader loader_visible"
+  >
+    <div
+      class="MuiGrid-root nivelator-xy MuiGrid-container MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
+    >
+      <img
+        alt="loader"
+        src=""
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;

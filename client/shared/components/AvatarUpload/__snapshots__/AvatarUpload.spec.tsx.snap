@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AvatarUpload Render AvatarUpload component 1`] = `
+<DocumentFragment>
+  <label
+    class="upload-avatar"
+    for="upload_login"
+  >
+    <input
+      id="upload_login"
+      name="login"
+      type="file"
+    />
+    <div
+      class="MuiAvatar-root MuiAvatar-circle MuiAvatar-colorDefault"
+    >
+      LP
+    </div>
+  </label>
+</DocumentFragment>
+`;
+
+exports[`AvatarUpload Render AvatarUpload component with image 1`] = `
+<DocumentFragment>
+  <label
+    class="upload-avatar"
+    for="upload_login"
+  >
+    <input
+      id="upload_login"
+      name="login"
+      type="file"
+    />
+    <div
+      class="MuiAvatar-root MuiAvatar-circle"
+    >
+      <img
+        class="MuiAvatar-img"
+        src="https://million-wallpapers.ru/wallpapers/5/57/459836597849189/rembo.jpg"
+      />
+    </div>
+  </label>
+</DocumentFragment>
+`;
