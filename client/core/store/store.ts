@@ -7,7 +7,7 @@ import { snackbarReducers } from './reducers/snackbar.reducers';
 
 const middlewares = [thunk];
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
     loader: loaderReducers,
     profile: profileReducers,
     game: gameReducers,
