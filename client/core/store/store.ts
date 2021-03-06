@@ -11,8 +11,8 @@ const rootReducer = combineReducers({
     loader: loaderReducers,
     profile: profileReducers,
     game: gameReducers,
-    auth: authReducers,
     snackbar: snackbarReducers,
+    auth: authReducers,
 });
 
 export const store = createStore(

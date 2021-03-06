@@ -15,7 +15,7 @@ export interface StoreSnackBarProps extends SnackBarDataProps {
 export interface StoreProps {
     loader: boolean
     game: StoreGameProps
-    profile: CurrentUserInfoProps | null
-    auth: boolean,
+    profile: CurrentUserInfoProps
+    auth: boolean
     snackbar: StoreSnackBarProps
 }

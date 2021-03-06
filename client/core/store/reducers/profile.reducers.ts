@@ -1,15 +1,15 @@
 import { CurrentUserInfoProps } from 'client/core/api';
 import { ActionProps } from '../actions/actions.types';
-import { GET_CURRENT_USER_INFO } from '../actions/profile.actions';
+import { SET_CURRENT_USER_INFO } from '../actions/auth.actions';
 
-const initialState = null;
+const initialStateProfile = {} as CurrentUserInfoProps;
 
 export const profileReducers = (
-    state = initialState,
+    state = initialStateProfile,
     action: ActionProps<CurrentUserInfoProps>,
 ) => {
     switch (action.type) {
-    case GET_CURRENT_USER_INFO:
+    case SET_CURRENT_USER_INFO:
         return { ...action.payload };
     default:
         return state;

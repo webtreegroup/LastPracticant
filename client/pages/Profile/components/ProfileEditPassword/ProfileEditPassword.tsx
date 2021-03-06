@@ -6,10 +6,10 @@ import {
     GRID_SPACE, LOCAL,
 } from 'client/shared/consts';
 import { InputControl } from 'client/shared/components';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ROUTES } from 'client/routing';
 import { useDispatch, useSelector } from 'react-redux';
-import { thunkEditPassword } from 'client/core/store';
+import { editPasswordThunk } from 'client/core/store';
 import { profileSelector } from 'client/core/store/selectors';
 import { PROFILE_EDIT_PASSWORD_CONTROLS } from './ProfileEditPassword.config';
 
@@ -17,14 +17,10 @@ export const ProfileEditPassword: React.FC = React.memo(() => {
     const dispatch = useDispatch();
     const profile = useSelector(profileSelector);
 
-    if (!profile) {
-        return <Redirect to={ROUTES.SIGNIN.path} />;
-    }
-
     const { control, handleSubmit, errors } = useForm<ChangePasswordProps>();
 
     const onSubmit = (data: ChangePasswordProps) => {
-        dispatch(thunkEditPassword(data));
+        dispatch(editPasswordThunk(data));
     };
 
     const controls = React.useMemo(

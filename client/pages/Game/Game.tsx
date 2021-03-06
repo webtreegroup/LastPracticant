@@ -9,13 +9,14 @@ import { GAME_OPTIONS } from 'client/core/components/GameCanvas/GameCanvas.confi
 import { cloneDeep } from 'client/shared/utils';
 import { useSelector } from 'react-redux';
 import { gameSelector } from 'client/core/store';
-import { GameOver } from './GameOver';
+import { withCheckAuth } from 'client/core/HOCs';
 import { GAME_RESOURSES, GAME_VIEWPORT } from './Game.config';
+import { GameOver } from './GameOver';
 import { GameNextLevel } from './GameNextLevel';
 
 const block = bem('game');
 
-export const Game: React.FC<PageComponentProps> = React.memo(() => {
+const GameComponent: React.FC<PageComponentProps> = React.memo(() => {
     const { game: gameState } = useSelector(gameSelector);
 
     const Painter = useMemo(() => {
@@ -47,3 +48,5 @@ export const Game: React.FC<PageComponentProps> = React.memo(() => {
         </PageLayout>
     );
 });
+
+export const Game = withCheckAuth(GameComponent);

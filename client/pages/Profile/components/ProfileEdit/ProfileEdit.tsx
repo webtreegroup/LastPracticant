@@ -1,31 +1,28 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback, useEffect } from 'react';
 import { Grid, Button } from '@material-ui/core';
 import { useForm } from 'react-hook-form';
 import { ChangeProfileProps, CurrentUserInfoProps } from 'client/core/api';
 import { GRID_SPACE, LOCAL } from 'client/shared/consts';
 import { InputControl, AvatarUpload } from 'client/shared/components';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ROUTES } from 'client/routing';
 import { useSelector, useDispatch } from 'react-redux';
 import { profileSelector } from 'client/core/store/selectors';
-import { thunkEditProfile, thunkEditAvatar } from 'client/core/store';
+import { editProfileThunk, editAvatarThunk } from 'client/core/store';
 import { PROFILE_EDIT_CONTROLS } from './ProfileEdit.config';
 
 export const ProfileEdit: React.FC = React.memo(() => {
     const profile = useSelector(profileSelector);
     const dispatch = useDispatch();
 
-    if (!profile) {
-        return <Redirect to={ROUTES.SIGNIN.path} />;
-    }
-
     const {
         control,
         handleSubmit,
         errors,
-    } = useForm<CurrentUserInfoProps>({ defaultValues: profile });
+        reset,
+    } = useForm<CurrentUserInfoProps>();
 
-    const onSubmit = (data: ChangeProfileProps) => dispatch(thunkEditProfile(data));
+    const onSubmit = (data: ChangeProfileProps) => dispatch(editProfileThunk(data));
 
     const onChangeAvatar = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const blob = e.target.files?.item(0);
@@ -37,7 +34,7 @@ export const ProfileEdit: React.FC = React.memo(() => {
         const formData = new FormData();
 
         formData.append('avatar', blob);
-        dispatch(thunkEditAvatar(formData));
+        dispatch(editAvatarThunk(formData));
     }, []);
 
     const controls = useMemo(
@@ -45,20 +42,24 @@ export const ProfileEdit: React.FC = React.memo(() => {
             const { name } = inputConfig;
             const error = errors[name as keyof typeof errors]?.message;
             return (
-                    <InputControl
-                        key={name}
-                        fullWidth
-                        variant="outlined"
-                        margin="dense"
-                        error={Boolean(error)}
-                        helperText={error}
-                        control={control}
-                        {...inputConfig}
-                    />
+                <InputControl
+                    key={name}
+                    fullWidth
+                    variant="outlined"
+                    margin="dense"
+                    error={Boolean(error)}
+                    helperText={error}
+                    control={control}
+                    {...inputConfig}
+                />
             );
         }),
         [errors],
     );
+
+    useEffect(() => {
+        reset(profile);
+    }, [profile]);
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="profile_form">
