@@ -3,6 +3,7 @@ import { Redirect, useRouteMatch } from 'react-router-dom';
 import { ROUTES } from 'client/routing';
 import { PageComponentProps } from 'client/shared/types';
 import { useDispatch, useSelector } from 'react-redux';
+import { Loader } from 'client/shared/components';
 import { getCurrentUserInfoThunk, authSelector } from '../store';
 
 export function withCheckAuth<T = any>(
@@ -20,6 +21,8 @@ export function withCheckAuth<T = any>(
                 dispatch(getCurrentUserInfoThunk());
             }
         }, [dispatch]);
+
+        if (isAuth === null) return <Loader isVisible />;
 
         if (!isAuth && !isSignPageThere) {
             return <Redirect to={ROUTES.SIGNIN.path} />;
