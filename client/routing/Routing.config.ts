@@ -9,11 +9,11 @@ export interface RouteValueProps {
 
 export const ROUTES: RoutesProps = {
     LANDING: {
-        path: '/',
+        path: '/landing',
         title: 'Лендинг',
     },
     HOME: {
-        path: '/home',
+        path: '/',
         title: 'Главная',
     },
     SIGNIN: {

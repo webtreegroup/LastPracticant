@@ -62,7 +62,7 @@ export const SigninForm: React.FC = React.memo(() => {
                             to={ROUTES.SIGNUP.path}
                             color="primary"
                         >
-                            {LOCAL.NO_ACCOUNT}
+                            {LOCAL.REGISTER}
                         </Button>
                     </Grid>
                 </Grid>

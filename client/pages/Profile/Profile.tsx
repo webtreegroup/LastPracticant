@@ -17,7 +17,7 @@ const ProfileComponent: React.FC<PageComponentProps> = React.memo(({ title }) =>
     return (
         <PageLayout goBackLink={goBackLink}>
             <Paper sizes="small">
-                <h1 className="auth-header">{title}</h1>
+                <h1>{title}</h1>
                 <Switch>
                     <Route path={ROUTES.PROFILE_PASSWORD.path}>
                         <ProfileEditPassword />

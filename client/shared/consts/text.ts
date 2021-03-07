@@ -1,7 +1,6 @@
 export const LOCAL = {
-    AUTHORIZE: 'Авторизоваться',
+    AUTHORIZE: 'Войти',
     REGISTER: 'Зарегистрироваться',
-    NO_ACCOUNT: 'Нет пароля?',
     CHANGE_PROFILE_DATA: 'Изменить данные',
     CHANGE_PROFILE_PASSWORD: 'Изменить пароль',
     SAVE: 'Сохранить',

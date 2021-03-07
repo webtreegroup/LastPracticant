@@ -1,6 +1,7 @@
+import './Home.css';
+
 import React, { useMemo } from 'react';
 import { PageComponentProps } from 'client/shared/types';
-import './Home.css';
 import { ButtonsToolbar, NivelatorXY, Paper } from 'client/shared/components';
 import {
     Button, Divider, List, ListItem, Avatar,
@@ -32,9 +33,9 @@ const HomeComponent: React.FC<PageComponentProps> = React.memo(() => {
     ];
     const controls = useMemo(
         () => routes.map((route) => (
-                <ListItem key={route.title}>
-                    <Link to={route.path}>{route.title}</Link>
-                </ListItem>
+            <ListItem key={route.title}>
+                <Link to={route.path}>{route.title}</Link>
+            </ListItem>
         )),
         [],
     );
@@ -46,7 +47,8 @@ const HomeComponent: React.FC<PageComponentProps> = React.memo(() => {
                     <Avatar src={profile.avatar} />
                     <p className={block('username')}>{profile.first_name}</p>
                     <p className={block('user-result')}>
-                        {LOCAL.RECORD}: result
+                        {/* TODO: будет доработано, когда реализуем АПИ для leaderboard */}
+                        {LOCAL.RECORD}: 49
                     </p>
                 </div>
                 <Divider />

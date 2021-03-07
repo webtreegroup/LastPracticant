@@ -5,7 +5,7 @@ import { withCheckAuth } from 'client/core/HOCs';
 import { SigninForm } from './components';
 
 export const SigninComponent: React.FC<PageComponentProps> = React.memo(({ title }) => (
-    <NivelatorXY className="home">
+    <NivelatorXY>
         <Paper sizes="small">
             <h1>{title}</h1>
             <SigninForm />
