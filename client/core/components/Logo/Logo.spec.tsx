@@ -4,7 +4,7 @@ import { Logo } from './Logo';
 
 afterEach(cleanup);
 
-describe('Loader', () => {
+describe('Logo', () => {
     it('Render Logo component', () => {
         const { asFragment } = render(<Logo />);
         expect(asFragment()).toMatchSnapshot();
