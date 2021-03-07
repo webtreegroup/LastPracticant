@@ -8,10 +8,6 @@ export interface RouteValueProps {
 }
 
 export const ROUTES: RoutesProps = {
-    LANDING: {
-        path: '/landing',
-        title: 'Лендинг',
-    },
     HOME: {
         path: '/',
         title: 'Главная',
