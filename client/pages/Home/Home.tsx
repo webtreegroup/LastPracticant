@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 import { logoutThunk, profileSelector } from 'client/core/store';
 import { CurrentUserInfoProps } from 'client/core/api';
 import { withCheckAuth } from 'client/core/HOCs';
+import { Logo } from 'client/core';
 
 const block = bem('home');
 
@@ -42,6 +43,7 @@ const HomeComponent: React.FC<PageComponentProps> = React.memo(() => {
 
     return (
         <NivelatorXY className={block()}>
+            <Logo />
             <Paper className={block('paper')} sizes="small">
                 <div className={block('userdata')}>
                     <Avatar src={profile.avatar} />
