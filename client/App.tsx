@@ -1,5 +1,4 @@
 import './App.css';
-import bem from 'bem-cn';
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Routing } from 'client/routing/Routing';
@@ -12,7 +11,6 @@ import { useSelector } from 'react-redux';
 import { Loader, SnackBar, NivelatorXY } from './shared/components';
 import { loaderSelector, snackbarSelector } from './core/store/selectors';
 
-const block = bem('home');
 const theme = createMuiTheme({
     palette: {
         type: 'dark',
@@ -31,7 +29,7 @@ export const App: React.FC = () => {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <NivelatorXY className={block()}>
+            <NivelatorXY>
                 <BrowserRouter>
                     <Routing />
                     <Loader isVisible={loader.isVisible} />
