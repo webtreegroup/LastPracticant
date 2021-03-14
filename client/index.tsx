@@ -1,12 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+import { Provider as ReduxProvider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 import { App } from './App';
-import { store } from './core/store';
+import { composeStore } from './core/store';
 
-ReactDOM.render(
-    <Provider store={store}>
-        <App />
-    </Provider>,
+const store = composeStore(window.__INITIAL_STATE__);
+
+// TODO: на время интеграции SSR, после нужно будет убрать
+// @ts-ignore
+window.store = store;
+
+ReactDOM.hydrate(
+    <ReduxProvider store={store}>
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+    </ReduxProvider>,
     document.getElementById('root'),
 );

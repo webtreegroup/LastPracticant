@@ -11,14 +11,15 @@ import bem from 'bem-cn';
 import { LOCAL } from 'client/shared/consts';
 import { ROUTES } from 'client/routing';
 import { Link } from 'react-router-dom';
+
 import { logoutThunk, profileSelector } from 'client/core/store';
 import { CurrentUserInfoProps } from 'client/core/api';
 import { withCheckAuth } from 'client/core/HOCs';
-import { Logo } from 'client/core';
+import { Meta, Logo } from 'client/core';
 
 const block = bem('home');
 
-const HomeComponent: React.FC<PageComponentProps> = React.memo(() => {
+const HomeComponent: React.FC<PageComponentProps> = React.memo(({ title }) => {
     const profile = useSelector(profileSelector) as CurrentUserInfoProps;
     const dispatch = useDispatch();
 
@@ -43,13 +44,14 @@ const HomeComponent: React.FC<PageComponentProps> = React.memo(() => {
 
     return (
         <NivelatorXY className={block()}>
+            <Meta title={title} />
             <Logo />
             <Paper className={block('paper')} sizes="small">
                 <div className={block('userdata')}>
                     <Avatar src={profile.avatar} />
                     <p className={block('username')}>{profile.first_name}</p>
                     <p className={block('user-result')}>
-                        {/* TODO: будет доработано, когда реализуем АПИ для leaderboard */}
+                        {/* TODO: будет доработано, когда реализуем АПИ для leaderboard, LP-82 */}
                         {LOCAL.RECORD}: 49
                     </p>
                 </div>

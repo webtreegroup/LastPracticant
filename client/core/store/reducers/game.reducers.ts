@@ -8,16 +8,16 @@ import {
 } from '../actions/game.actions';
 import { StoreGameProps } from '../store.types';
 
-const initialState: Required<StoreGameProps> = {
+const initialState = {
     isOver: false,
     isPause: false,
     score: 0,
     currentLevel: 0,
 };
 
-export const gameReducers = (state = initialState, action: ActionProps<StoreGameProps>) => {
+export const gameReducers = (state: StoreGameProps = initialState, action: Required<ActionProps<StoreGameProps>>) => {
     const actionScore = action.payload?.score || 0;
-    const score = state.score + actionScore;
+    const score = (state.score || 0) + actionScore;
 
     switch (action.type) {
     case GAME_OVER: {
@@ -42,7 +42,7 @@ export const gameReducers = (state = initialState, action: ActionProps<StoreGame
             isPause: action.payload?.isPause,
             currentLevel: state.currentLevel === GAME_OPTIONS.levels.options.length - 1
                 ? 0
-                : state.currentLevel + 1,
+                : (state.currentLevel || 0) + 1,
         };
     }
     case GAME_RESET: {
