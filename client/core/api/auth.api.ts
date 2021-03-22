@@ -27,22 +27,22 @@ export interface CurrentUserInfoProps {
     avatar: string
 }
 
-const authAPIInstance = new HTTP('/auth');
+const ExpressAuthAPI = new HTTP('/auth');
 
 export class AuthAPI extends BaseAPI {
-    static signup(data: SignupProps): Promise<XMLHttpRequest> {
-        return authAPIInstance.post('/signup', { data });
+    static signup(data: SignupProps) {
+        return ExpressAuthAPI.post<SignupProps, Response>('/signup', { data });
     }
 
-    static signin(data: SigninProps): Promise<XMLHttpRequest> {
-        return authAPIInstance.post('/signin', { data, responseFormat: 'text' });
+    static signin(data: SigninProps) {
+        return ExpressAuthAPI.post<SigninProps, Response>('/signin', { data, responseFormat: 'text' });
     }
 
-    static getCurrentUserInfo(): Promise<CurrentUserInfoProps> {
-        return authAPIInstance.get<CurrentUserInfoProps>('/user');
+    static getCurrentUserInfo() {
+        return ExpressAuthAPI.get<{}, CurrentUserInfoProps>('/user');
     }
 
-    static logout(): Promise<XMLHttpRequest> {
-        return authAPIInstance.post('/logout', { responseFormat: 'text' });
+    static logout() {
+        return ExpressAuthAPI.post<{}, Response>('/logout', { responseFormat: 'text' });
     }
 }

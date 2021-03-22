@@ -4,21 +4,22 @@ type HeadersType = {
     [key: string]: string
 };
 
-type OptionsType = {
+export type OptionsType<T = any> = {
     method: METHOD
-    data?: any
+    data?: T
     headers?: HeadersType
     responseFormat?: 'json' | 'text'
 };
 
-type OptionsWithoutMethodType = Omit<OptionsType, 'method'>;
+export type OptionsWithoutMethodType = Omit<OptionsType, 'method'>;
+export type ApiModeType = 'clientDirectly' | 'accrosExpress';
 
 export interface ResponseProps<T> extends Omit<XMLHttpRequest, 'response'> {
     response: T
 }
 
-export const API_HOST = 'https://ya-praktikum.tech';
-export const API_BASE_PATH = `${API_HOST}/api/v2`;
+export const API_SERVER_HOST = 'https://ya-praktikum.tech';
+export const API_EXPRESS_HOST = '';
 
 export function queryStringify<T extends object>(data: T): string {
     if (!data) {
@@ -31,33 +32,33 @@ export function queryStringify<T extends object>(data: T): string {
 }
 
 export class HTTP {
-    _path: string = API_BASE_PATH;
+    _path: string;
 
     constructor(path = '') {
-        this._path += path;
+        this._path = `${API_EXPRESS_HOST}/api/v2${path}`;
     }
 
-    get<T>(url: string, options: OptionsWithoutMethodType = {}): Promise<T> {
-        return this.request<T>(url, { ...options, method: METHOD.GET });
+    get<Req, Res>(url: string, options: OptionsWithoutMethodType = {}): Promise<Res> {
+        return this.request<Req, Res>(url, { ...options, method: METHOD.GET });
     }
 
-    post<T>(url: string, options: OptionsWithoutMethodType = {}): Promise<T> {
-        return this.request<T>(url, { ...options, method: METHOD.POST });
+    post<Req, Res>(url: string, options: OptionsWithoutMethodType = {}): Promise<Res> {
+        return this.request<Req, Res>(url, { ...options, method: METHOD.POST });
     }
 
-    put<T>(url: string, options: OptionsWithoutMethodType = {}): Promise<T> {
-        return this.request<T>(url, { ...options, method: METHOD.PUT });
+    put<Req, Res>(url: string, options: OptionsWithoutMethodType = {}): Promise<Res> {
+        return this.request<Req, Res>(url, { ...options, method: METHOD.PUT });
     }
 
-    delete<T>(url: string, options: OptionsWithoutMethodType = {}): Promise<T> {
-        return this.request<T>(url, { ...options, method: METHOD.DELETE });
+    delete<Req, Res>(url: string, options: OptionsWithoutMethodType = {}): Promise<Res> {
+        return this.request<Req, Res>(url, { ...options, method: METHOD.DELETE });
     }
 
-    request<T>(
+    request<Req, Res>(
         url: string,
         options: OptionsType = { method: METHOD.GET },
-    ): Promise<T> {
-        function serializeBody(method: METHOD, data: T) {
+    ): Promise<Res> {
+        function serializeBody(method: METHOD, data: Req) {
             if (method === METHOD.GET) {
                 return;
             }
@@ -67,20 +68,18 @@ export class HTTP {
             return JSON.stringify(data);
         }
 
-        function serializeHeader(method: METHOD, data: T) {
-            if (method === METHOD.GET) {
-                return;
+        function serializeHeader({ data, method, headers }: OptionsType<Req>) {
+            if (method === METHOD.GET || data instanceof FormData) {
+                return headers;
             }
-            if (data instanceof FormData) {
-                return;
-            }
+
             return {
+                ...headers,
                 'Content-Type': 'application/json',
             };
         }
 
         const { method, data, responseFormat = 'json' } = options;
-
         const basePath = `${this._path}${url}`;
         const path = method === METHOD.GET
             ? `${basePath}${queryStringify(data)}`
@@ -91,12 +90,13 @@ export class HTTP {
             mode: 'cors',
             credentials: 'include',
             body: serializeBody(method, data),
-            headers: serializeHeader(method, data),
+            headers: serializeHeader(options),
         })
             .then((response) => {
                 if (!response.ok) {
                     return Promise.reject(response);
                 }
+
                 return response[responseFormat]();
             });
     }

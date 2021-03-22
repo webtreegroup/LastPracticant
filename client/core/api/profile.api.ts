@@ -1,6 +1,5 @@
 import { HTTP } from './api';
 import { BaseAPI } from './base.api';
-import { CurrentUserInfoProps } from './auth.api';
 
 export interface ChangeProfileProps {
     first_name: string
@@ -20,18 +19,18 @@ export interface ChangePasswordProps {
     newPassword: string
 }
 
-const profileAPIInstance = new HTTP('/user');
+const ExpresspPofileAPI = new HTTP('/user');
 
 export class ProfileAPI extends BaseAPI {
-    static change<T = ChangeProfileProps>(data: T): Promise<CurrentUserInfoProps> {
-        return profileAPIInstance.put<CurrentUserInfoProps>('/profile', { data });
+    static change(data: ChangeProfileProps) {
+        return ExpresspPofileAPI.put<ChangeProfileProps, ChangeProfileProps>('/profile', { data });
     }
 
-    static changeAvatar(data: FormData): Promise<CurrentUserInfoProps> {
-        return profileAPIInstance.put<CurrentUserInfoProps>('/profile/avatar', { data });
+    static changeAvatar(data: FormData) {
+        return ExpresspPofileAPI.put<ChangeProfilePropsAvatar, Response>('/profile/avatar', { data });
     }
 
-    static changePassword<T = ChangePasswordProps>(data: T): Promise<T> {
-        return profileAPIInstance.put<T>('/password', { data, responseFormat: 'text' });
+    static changePassword(data: ChangePasswordProps) {
+        return ExpresspPofileAPI.put<ChangePasswordProps, Response>('/password', { data, responseFormat: 'text' });
     }
 }

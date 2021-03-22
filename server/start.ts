@@ -1,24 +1,18 @@
 import express, { Express } from 'express';
-import { renderBundle } from './middlewares/render-bundle';
+import cookieParser from 'cookie-parser';
+import * as FormData from 'form-data';
+import { renderBundle } from './middlewares/renderBundle';
+import { routing } from './Routing';
 
-const path = require('path');
+(global as any).FormData = FormData;
 
 const app: Express = express();
 const PORT = process.env.PORT || 8000;
 
-// TODO: отключил SW на время выполнения задач, LP-94
-// app.get('/sw.js', (_, res) => {
-//     res.sendFile(path.join(__dirname, '../sw.js'));
-// });
-
-app.get('*.(js|css|png|jpe?g|gif)$', (req, res) => {
-    res.sendFile(path.join(__dirname, req.path));
-});
-
+app.use(cookieParser());
 app.use(renderBundle);
-app.get('*', (req, res) => {
-    res.renderBundle(req.url);
-});
+
+routing(app);
 
 app.listen(PORT, () => {
     console.log(`Start in ${PORT}!`);
