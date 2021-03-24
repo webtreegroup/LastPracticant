@@ -1,9 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider as ReduxProvider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import { hot } from 'react-hot-loader/root';
+import { ConnectedRouter } from 'connected-react-router';
 import { App } from './App';
-import { composeStore } from './core/store';
+import { composeStore, history, rootReducer } from './core/store';
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 
 const store = composeStore(window.__INITIAL_STATE__);
 
@@ -11,11 +14,23 @@ const store = composeStore(window.__INITIAL_STATE__);
 // @ts-ignore
 window.store = store;
 
-ReactDOM.hydrate(
+const RootComponent = () => (
     <ReduxProvider store={store}>
-        <BrowserRouter>
+        <ConnectedRouter history={history}>
             <App />
-        </BrowserRouter>
-    </ReduxProvider>,
+        </ConnectedRouter>
+    </ReduxProvider>
+);
+
+const RootComponentWithHot = hot(RootComponent);
+
+ReactDOM.hydrate(
+    <RootComponentWithHot />,
     document.getElementById('root'),
 );
+
+if ((module as any).hot) {
+    (module as any).hot.accept('./core/store/store', () => {
+        store.replaceReducer(rootReducer);
+    });
+}

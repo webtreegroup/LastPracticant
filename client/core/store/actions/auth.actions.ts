@@ -8,6 +8,7 @@ import {
 import { ROUTES } from 'client/routing';
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
+import { push } from 'connected-react-router';
 import { StoreProps } from '../store.types';
 import { hideLoaderAction, showLoaderAction } from './loader.actions';
 import { showSnackBarAction } from './snackbar.actions';
@@ -23,8 +24,6 @@ export const setCurrentUserInfoAction = (payload: CurrentUserInfoProps) => ({
 });
 
 export const getCurrentUserInfoThunk = (): ThunkAction<void, StoreProps, unknown, Action<string>> => (dispatch) => {
-    dispatch(showLoaderAction());
-
     AuthAPI.getCurrentUserInfo().then(async (response) => {
         dispatch(
             setCurrentUserInfoAction({
@@ -33,13 +32,9 @@ export const getCurrentUserInfoThunk = (): ThunkAction<void, StoreProps, unknown
             }),
         );
         dispatch(changeAuth(true));
-    })
-        .catch(() => {
-            dispatch(changeAuth(false));
-        })
-        .finally(() => {
-            dispatch(hideLoaderAction());
-        });
+    }).catch(() => {
+        dispatch(changeAuth(false));
+    });
 };
 
 export const signupThunk = (
@@ -48,10 +43,11 @@ export const signupThunk = (
     dispatch(showLoaderAction());
 
     AuthAPI.signup(data).finally(() => {
-        dispatch(hideLoaderAction());
         dispatch(getCurrentUserInfoThunk());
     }).then(() => {
-        window.history.pushState({}, '', ROUTES.HOME.path);
+        dispatch(push(ROUTES.HOME.path));
+    }).finally(() => {
+        dispatch(hideLoaderAction());
     });
 };
 
@@ -64,7 +60,7 @@ export const logoutThunk = (): ThunkAction<void, StoreProps, unknown, Action<str
         })
         .finally(() => {
             dispatch(hideLoaderAction());
-            window.history.pushState({}, '', ROUTES.SIGNIN.path);
+            dispatch(push(ROUTES.SIGNIN.path));
         });
 };
 
@@ -75,18 +71,19 @@ export const signinThunk = (
 
     AuthAPI.signin(data)
         .then(() => {
-            dispatch(hideLoaderAction());
             dispatch(getCurrentUserInfoThunk());
         })
         .then(() => {
-            window.history.pushState({}, '', ROUTES.HOME.path);
+            dispatch(push(ROUTES.HOME.path));
         })
         .catch((response) => {
-            dispatch(hideLoaderAction());
             response.json().then((result: any) => {
                 dispatch(
                     showSnackBarAction({ type: 'error', msg: result?.reason }),
                 );
             });
+        })
+        .finally(() => {
+            dispatch(hideLoaderAction());
         });
 };

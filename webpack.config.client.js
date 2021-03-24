@@ -1,28 +1,35 @@
 const path = require('path');
-const StylelintPlugin = require('stylelint-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const webpack = require('webpack');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const { IS_DEV } = require('./env');
+const babelLoader = require('./webpack.babel.loader');
 
 module.exports = {
-    entry: './client/index.tsx',
+    mode: IS_DEV ? 'development' : 'production',
+    entry: [
+        IS_DEV && 'webpack-hot-middleware/client?noInfo=true',
+        IS_DEV && 'react-hot-loader/patch',
+        IS_DEV && 'css-hot-loader/hotModuleReplacement',
+        './client/index.tsx',
+    ].filter(Boolean),
     output: {
-        filename: 'app.js',
-        path: path.join(__dirname, './dist'),
+        filename: '[name].js',
+        path: IS_DEV ? __dirname : path.join(__dirname, './dist'),
+        publicPath: '/',
     },
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
         alias: {
-            client: path.join(__dirname, './client/'),
-            server: path.join(__dirname, './server/'),
+            'react-dom': '@hot-loader/react-dom',
         },
+        plugins: [new TsconfigPathsPlugin()],
     },
     module: {
         rules: [
-            {
-                test: /\.tsx?$/,
-                use: 'ts-loader',
-                exclude: /node_modules/,
-            },
+            babelLoader,
             {
                 test: /\.css$/,
                 use: [
@@ -57,10 +64,7 @@ module.exports = {
         ],
     },
     plugins: [
-        new StylelintPlugin({
-            configFile: path.join(__dirname, './.stylelintrc.json'),
-            context: path.join(__dirname, './client'),
-        }),
+        new ForkTsCheckerWebpackPlugin(),
         new MiniCssExtractPlugin(),
         new CopyPlugin({
             patterns: [
@@ -70,5 +74,8 @@ module.exports = {
                 concurrency: 100,
             },
         }),
-    ],
+        IS_DEV ? new webpack.HotModuleReplacementPlugin() : '',
+    ].filter(Boolean),
 };
+
+console.info('--------------- enviroment "mode" is:', process.env.NODE_ENV, '---------------');

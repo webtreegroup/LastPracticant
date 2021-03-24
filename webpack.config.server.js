@@ -1,7 +1,11 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const { IS_DEV } = require('./env');
+const babelLoader = require('./webpack.babel.loader');
 
 module.exports = {
+    mode: IS_DEV ? 'development' : 'production',
     target: 'node',
     externals: [nodeExternals()],
     entry: './server/start.ts',
@@ -11,18 +15,11 @@ module.exports = {
     },
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
-        alias: {
-            client: path.join(__dirname, './client/'),
-            server: path.join(__dirname, './server/'),
-        },
+        plugins: [new TsconfigPathsPlugin()],
     },
     module: {
         rules: [
-            {
-                test: /\.tsx?$/,
-                use: 'ts-loader',
-                exclude: /node_modules/,
-            },
+            babelLoader,
             {
                 test: /\.css$/,
                 use: [
@@ -36,10 +33,7 @@ module.exports = {
                 test: /\.(png|jpe?g|gif)$/i,
                 use: [
                     {
-                        loader: 'file-loader',
-                        options: {
-                            name: '[name].[ext]',
-                        },
+                        loader: 'null-loader',
                     },
                 ],
             },

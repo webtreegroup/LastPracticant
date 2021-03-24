@@ -1,15 +1,14 @@
 import express, { Express } from 'express';
 import path from 'path';
 import { ExpressProfileAPI } from 'server/api/profile.api';
+
 import { ExpressAuthAPI } from '../api/auth.api';
 import { getHeadersWithCookies, setCookies } from '../server.utils';
 
 export function routing(app: Express) {
     const jsonParser = express.json();
 
-    app.get('*.(js|css|png|jpe?g|gif)$', (req, res) => {
-        res.sendFile(path.join(__dirname, req.path));
-    });
+    app.use(express.static(path.join(__dirname, './dist')));
 
     app.get('/api/v2/auth/user', (req, res) => {
         ExpressAuthAPI.getCurrentUserInfo({
