@@ -1,5 +1,6 @@
 export const LOCAL = {
     AUTHORIZE: 'Авторизоваться',
+    AUTHORIZE_YANDEX: 'Войти через Яндекс',
     REGISTER: 'Зарегистрироваться',
     NO_ACCOUNT: 'Нет пароля?',
     CHANGE_PROFILE_DATA: 'Изменить данные',

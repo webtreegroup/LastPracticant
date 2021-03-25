@@ -1,5 +1,6 @@
 import express, { Express } from 'express';
 import path from 'path';
+import { ExpressOAuthAPI } from 'server/api/oauth.api';
 import { ExpressProfileAPI } from 'server/api/profile.api';
 
 import { ExpressAuthAPI } from '../api/auth.api';
@@ -16,6 +17,30 @@ export function routing(app: Express) {
         })
             .then(async (response) => {
                 res.send(await response.json());
+            })
+            .catch((error) => {
+                res.status(error.status).send(error.statusText);
+            });
+    });
+
+    app.get('/api/v2/oauth/yandex/service-id', (req, res) => {
+        ExpressOAuthAPI.getServiceId()
+            .then(async (response) => {
+                res.send(await response.json());
+            })
+            .catch((error) => {
+                res.status(error.status).send(error.statusText);
+            });
+    });
+
+    app.post('/api/v2/oauth/yandex', jsonParser, (req, res) => {
+        if (!req.body) return res.sendStatus(400);
+
+        ExpressOAuthAPI.signinWithYandex(req.body)
+            .then(async (fetchResponse) => {
+                setCookies(fetchResponse, res);
+
+                res.send(await fetchResponse.text());
             })
             .catch((error) => {
                 res.status(error.status).send(error.statusText);
@@ -51,8 +76,6 @@ export function routing(app: Express) {
     });
 
     app.post('/api/v2/auth/logout', jsonParser, (req, res) => {
-        if (!req.body) return res.sendStatus(400);
-
         ExpressAuthAPI.logout({
             headers: getHeadersWithCookies(req),
         })

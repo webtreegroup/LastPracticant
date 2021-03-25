@@ -13,18 +13,16 @@ const CACHE_FIRST_STRATEGY_URLS = [
     '/life.png',
     '/loader.gif',
     '/logo.png',
-    '/main.css',
 ];
+
 const NETWORK_ONLY_STRATEGY_URLS = [
     'auth/signin',
     'auth/signup',
     'auth/user',
+    'auth/logout',
+    'oauth/yandex',
     'hot-update',
     '__webpack_hmr',
-];
-
-const NETWORK_FIRST_STRATEGY_URLS = [
-    '/',
 ];
 
 self.addEventListener('install', async () => {
@@ -87,6 +85,10 @@ function fetchMiddleware(event) {
 
     const url = new URL(request.url);
 
+    if (url.origin === location.origin && url.search.includes('code')) {
+        return networkOnly(request);
+    }
+
     if (url.origin === location.origin && NETWORK_ONLY_STRATEGY_URLS.some(pathMatcher(url.pathname))) {
         return networkOnly(request);
     }
@@ -95,10 +97,11 @@ function fetchMiddleware(event) {
         return cacheFirst(request);
     }
 
-    if (url.origin === location.origin && NETWORK_FIRST_STRATEGY_URLS.some(pathMatcher(url.pathname))) {
+    if (url.origin === location.origin && url.pathname === '/') {
         return networkFirst(request);
     }
 
+    // Сюда попадут main.js, main.css
     return networkFirst(request);
 }
 

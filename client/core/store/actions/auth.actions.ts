@@ -42,7 +42,7 @@ export const signupThunk = (
 ): ThunkAction<void, StoreProps, unknown, Action<string>> => (dispatch) => {
     dispatch(showLoaderAction());
 
-    AuthAPI.signup(data).finally(() => {
+    AuthAPI.signup(data).then(() => {
         dispatch(getCurrentUserInfoThunk());
     }).then(() => {
         dispatch(push(ROUTES.HOME.path));
@@ -58,6 +58,7 @@ export const logoutThunk = (): ThunkAction<void, StoreProps, unknown, Action<str
         .then(() => {
             dispatch(changeAuth(false));
         })
+        .catch(console.error)
         .finally(() => {
             dispatch(hideLoaderAction());
             dispatch(push(ROUTES.SIGNIN.path));
