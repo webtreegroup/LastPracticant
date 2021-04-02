@@ -6,13 +6,14 @@ import { Meta, PageLayout } from 'client/core';
 import { ROUTES } from 'client/routing';
 import { Paper } from 'client/shared/components';
 import { useParams } from 'react-router-dom';
+import { withCheckAuth } from 'client/core/HOCs';
 import { block } from './Forum.config';
 
-export const ForumTopic: React.FC<PageComponentProps> = ({ title }) => {
+export const ForumTopicComponent: React.FC<PageComponentProps> = ({ title }) => {
     const params = useParams<UrlCommonProps>();
 
     return (
-        <PageLayout goBackLink={ROUTES.FORUM.path} className={block()}>
+        <PageLayout goBackLink={ROUTES.FORUM.children?.BOARD.path} className={block()}>
             <Meta title={title} />
             <Paper title={title}>
                 {`topic ${params.id}`}
@@ -20,3 +21,5 @@ export const ForumTopic: React.FC<PageComponentProps> = ({ title }) => {
         </PageLayout>
     );
 };
+
+export const ForumTopic = withCheckAuth(ForumTopicComponent);

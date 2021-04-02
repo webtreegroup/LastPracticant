@@ -1,10 +1,14 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import { ROUTES } from './Routing.config';
+import { ROUTES, RoutesProps } from './Routing.config';
 
-export const Routing: React.FC = React.memo(() => {
-    const pages = Object.values(ROUTES).map(({
+interface RoutingProps {
+    routes?: RoutesProps
+}
+
+export const Routing: React.FC<RoutingProps> = React.memo(({ routes = ROUTES }) => {
+    const pages = Object.values(routes).map(({
         component: Page,
         title,
         path,
