@@ -1,4 +1,9 @@
 export const LOCAL = {
+    COMMON_PREFIX: {
+        SEND: 'Отправить',
+        ADD: 'Добавить',
+        SAVE: 'Сохранить',
+    },
     AUTHORIZE: 'Авторизоваться',
     AUTHORIZE_YANDEX: 'Войти через Яндекс',
     REGISTER: 'Зарегистрироваться',
