@@ -1,8 +1,9 @@
 export const LOCAL = {
-    COMMON_PREFIX: {
+    COMMON_PREFIXES: {
         SEND: 'Отправить',
         ADD: 'Добавить',
         SAVE: 'Сохранить',
+        REPLY: 'Ответить',
     },
     AUTHORIZE: 'Авторизоваться',
     AUTHORIZE_YANDEX: 'Войти через Яндекс',
@@ -10,12 +11,13 @@ export const LOCAL = {
     NO_ACCOUNT: 'Нет пароля?',
     CHANGE_PROFILE_DATA: 'Изменить данные',
     CHANGE_PROFILE_PASSWORD: 'Изменить пароль',
-    SAVE: 'Сохранить',
     BACK: 'Назад',
     AVATAR_DEFAULT: 'LP',
     RECORD: 'Рекорд',
     EXIT: 'Выйти',
     FORUM_COLUMN_TOPIC: 'Тема',
+    FORUM_COLUMN_COMMENT: 'Комментарий',
+    FORUM_COLUMN_COMMENT_EMPTY: 'Комментарии отсутствуют...',
     FORUM_COLUMN_REVIEWS: 'Просмотры',
     FORUM_COLUMN_ANSWERS: 'Ответы',
     FORUM_COLUMN_AUTOR: 'Автор',

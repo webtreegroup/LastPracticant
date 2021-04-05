@@ -11,9 +11,9 @@ import { Button } from '@material-ui/core';
 import { withCheckAuth } from 'client/core/HOCs';
 import { useElementVisible } from 'client/core/hooks';
 import { LOCAL } from 'client/shared/consts';
-import { rows } from './Forum.mock';
+import { TOPICS } from './Forum.mock';
 import { columns, block } from './Forum.config';
-import { AddTopikForm } from './components';
+import { AddTopicForm } from './components';
 
 export const ForumBoardComponent: React.FC<PageComponentProps> = React.memo(({ title }) => {
     const {
@@ -39,11 +39,11 @@ export const ForumBoardComponent: React.FC<PageComponentProps> = React.memo(({ t
                         onChangeVisible={handleChangeElementVisible}
                         title={LOCAL.FORUM_COLUMN_TOPIC}
                     >
-                        <AddTopikForm />
+                        <AddTopicForm />
                     </Popup>
                 </ButtonsToolbar>
                 <DataGrid
-                    rows={rows}
+                    rows={TOPICS}
                     columns={columns}
                     pageSize={10}
                     autoHeight
