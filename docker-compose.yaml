@@ -1,0 +1,47 @@
+version: "3"
+
+services:
+  lp-app:
+    build:
+      context: .
+    ports:
+      - "5555:5000"
+    depends_on:
+      - mongo
+      - postgres
+    networks:
+      - app-network
+    command: ./wait-for.sh mongo:27017 -- npm run heroku-start
+    restart: always
+
+  mongo:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER_NAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    volumes:
+      - ./mongo:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network
+    restart: always
+
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER_NAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB_NAME}
+      PGDATA: /tmp
+    volumes: 
+      - ./postgresdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+    restart: always 
+
+networks:
+    app-network:
+        driver: bridge 

@@ -9,5 +9,8 @@ $RECYCLE.BIN/
 .settings/
 .vscode/
 /static
-
+dev.env
+.env
 dist
+mongo
+postgresdata
