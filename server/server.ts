@@ -1,6 +1,4 @@
 import express from 'express';
-// TODO: раскоментировать во время выполнения задачки LP-109
-// import { Pool } from 'pg';
 import devMiddleware from 'webpack-dev-middleware';
 import hotMiddleware from 'webpack-hot-middleware';
 import cookieParser from 'cookie-parser';
@@ -11,16 +9,9 @@ import { MONGO_HOST } from '../env';
 import webpackConfig from '../webpack.config.client';
 import { renderBundle } from './middlewares/renderBundle';
 import { routing } from './routing';
+import { postgres } from './models';
 
 const compiler = webpack(webpackConfig as Configuration);
-
-// TODO: раскоментировать во время выполнения задачки LP-109
-// const postgres = new Pool({
-//     max: 20,
-//     connectionString: 'postgres://user:password@postgres:5432/db-name',
-//     idleTimeoutMillis: 30000,
-// });
-
 const mongo = new MongoClient(MONGO_HOST);
 
 export class Server {
@@ -45,17 +36,16 @@ export class Server {
     }
 
     private dbConnect() {
-        // TODO: раскоментировать во время выполнения задачки LP-109
-        // postgres.connect((err) => {
-        //     if (err) throw err;
-
-        //     console.info('--------------- Postgres Connected. ---------------');
-        // });
+        postgres.sync();
 
         mongo.connect((err) => {
-            if (err) throw err;
+            if (err) {
+                console.error('--------------- MongoDB connection error. ---------------');
 
-            console.info('--------------- MongoDB Connected. ---------------');
+                throw err;
+            }
+
+            console.info('--------------- MongoDB connected. ---------------');
         });
     }
 
