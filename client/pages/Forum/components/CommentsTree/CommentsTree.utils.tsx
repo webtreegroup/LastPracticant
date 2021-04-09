@@ -3,6 +3,7 @@ import {
 } from '@material-ui/core';
 import { LOCAL } from 'client/shared/consts';
 import { FnActionRequiredProps } from 'client/shared/types';
+import { formatDate } from 'client/shared/utils';
 import React, { MouseEvent } from 'react';
 import { ForumTopicCommentProps } from '../../Forum.types';
 import { block } from './CommentsTree.config';
@@ -24,7 +25,7 @@ export const mapCommentsToTree = (
         <React.Fragment key={comment.id}>
             <ListItem alignItems="flex-start">
                 <ListItemText
-                    primary={comment.date}
+                    primary={formatDate(comment.createdAt)}
                     secondary={(
                         <>
                             <Typography
@@ -32,17 +33,17 @@ export const mapCommentsToTree = (
                                 variant="body2"
                                 color="textPrimary"
                             >
-                                {comment.author}
+                                {comment.user.name}
                             </Typography>
                             {formatCommentDescription(comment.description)}
-                            <div className={block('reply')}>
+                            <span className={block('reply')}>
                                 <a
                                     onClick={handleAddComment(comment.id)}
                                     href="#s"
                                 >
                                     {LOCAL.COMMON_PREFIXES.REPLY}
                                 </a>
-                            </div>
+                            </span>
                         </>
                     )}
                 />

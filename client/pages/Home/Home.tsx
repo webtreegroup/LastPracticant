@@ -4,7 +4,7 @@ import React, { useMemo } from 'react';
 import { PageComponentProps } from 'client/shared/types';
 import { ButtonsToolbar, NivelatorXY, Paper } from 'client/shared/components';
 import {
-    Button, Divider, List, ListItem, Avatar,
+    Button, Divider, List, ListItem,
 } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import bem from 'bem-cn';
@@ -13,14 +13,13 @@ import { ROUTES } from 'client/routing';
 import { Link } from 'react-router-dom';
 
 import { logoutThunk, profileSelector } from 'client/core/store';
-import { CurrentUserInfoProps } from 'client/core/api';
 import { withCheckAuth } from 'client/core/HOCs';
 import { Meta, Logo } from 'client/core';
 
 const block = bem('home');
 
 const HomeComponent: React.FC<PageComponentProps> = React.memo(({ title }) => {
-    const profile = useSelector(profileSelector) as CurrentUserInfoProps;
+    const profile = useSelector(profileSelector);
     const dispatch = useDispatch();
 
     const handleLogout = () => {
@@ -48,7 +47,6 @@ const HomeComponent: React.FC<PageComponentProps> = React.memo(({ title }) => {
             <Logo />
             <Paper className={block('paper')} sizes="small">
                 <div className={block('userdata')}>
-                    <Avatar src={profile.avatar} />
                     <p className={block('username')}>{profile.first_name}</p>
                     <p className={block('user-result')}>
                         {/* TODO: будет доработано, когда реализуем АПИ для leaderboard, LP-82 */}

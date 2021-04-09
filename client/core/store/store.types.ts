@@ -1,12 +1,18 @@
 import { SnackBarDataProps } from 'client/shared/components';
 import { RouterState } from 'connected-react-router';
-import { CurrentUserInfoProps } from '../api';
+import { CurrentUserInfoProps, GetAllCommentsResponseProps, GetAllTopicsResponseProps } from '../api';
 
 export interface StoreGameProps {
     isOver?: boolean
     isPause?: boolean
     score?: number
     currentLevel?: number
+}
+
+export interface StoreForumProps {
+    topics?: GetAllTopicsResponseProps[]
+    currentTopic?: GetAllTopicsResponseProps
+    comments?: GetAllCommentsResponseProps[]
 }
 
 export interface StoreSnackBarProps extends SnackBarDataProps {
@@ -21,4 +27,5 @@ export interface StoreProps {
     auth: boolean | null
     oauth: number | null
     snackbar: StoreSnackBarProps
+    forum: StoreForumProps
 }

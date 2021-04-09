@@ -1,6 +1,6 @@
 import './Forum.css';
 
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { PageComponentProps, UrlCommonProps } from 'client/shared/types';
 import { Meta, PageLayout } from 'client/core';
 import { ROUTES } from 'client/routing';
@@ -11,12 +11,19 @@ import { useElementVisible } from 'client/core/hooks';
 import { LOCAL } from 'client/shared/consts';
 import { Button } from '@material-ui/core';
 import { AddIcon } from '@material-ui/data-grid';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+    commentsSelector, currentTopicSelector, getCommentsThunk, getTopicByIdThunk,
+} from 'client/core/store';
 import { block } from './Forum.config';
-import { COMMENTS_TREE } from './Forum.mock';
 import { AddCommentForm, CommentsTree } from './components';
+import { composeCommentsArrayTree } from './Forum.utils';
 
 export const ForumTopicComponent: React.FC<PageComponentProps> = React.memo(({ title }) => {
     const params = useParams<UrlCommonProps>();
+    const comments = useSelector(commentsSelector);
+    const currentTopic = useSelector(currentTopicSelector);
+    const dispatch = useDispatch();
 
     const {
         elementVisible,
@@ -34,11 +41,20 @@ export const ForumTopicComponent: React.FC<PageComponentProps> = React.memo(({ t
         handleAddComment(0);
     }, []);
 
+    useEffect(() => {
+        const topicId = Number(params.id);
+
+        if (topicId) {
+            dispatch(getTopicByIdThunk(topicId));
+            dispatch(getCommentsThunk(topicId));
+        }
+    }, [params.id]);
+
     return (
         <PageLayout goBackLink={ROUTES.FORUM.children?.BOARD.path} className={block()}>
             <Meta title={title} />
-            <Paper title={title}>
-                {`topic ${params.id}`}
+            <Paper title={currentTopic?.name}>
+                <div>{currentTopic?.description}</div>
                 <hr className={block('comments-divider')} />
                 <Button
                     variant="contained"
@@ -53,10 +69,14 @@ export const ForumTopicComponent: React.FC<PageComponentProps> = React.memo(({ t
                     onChangeVisible={handleChangeElementVisible}
                     title={LOCAL.FORUM_COLUMN_COMMENT}
                 >
-                    <AddCommentForm parentId={commentParentId} />
+                    <AddCommentForm
+                        closeModal={handleChangeElementVisible}
+                        topicId={params.id}
+                        parentId={commentParentId}
+                    />
                 </Popup>
                 <CommentsTree
-                    comments={COMMENTS_TREE}
+                    comments={composeCommentsArrayTree(comments)}
                     onAddComment={handleAddComment}
                 />
             </Paper>

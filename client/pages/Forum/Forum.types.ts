@@ -1,8 +1,5 @@
-export interface ForumTopicCommentProps {
-    id: number
-    description: string
-    date: string
-    author: string
-    parentId: number
+import { GetAllCommentsResponseProps } from 'client/core/api';
+
+export interface ForumTopicCommentProps extends GetAllCommentsResponseProps {
     children?: ForumTopicCommentProps[]
 }

@@ -1,22 +1,33 @@
-import { SigninProps } from 'client/core/api';
+import { AddTopicRequestProps } from 'client/core/api';
 import React, { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { GRID_SPACE, LOCAL } from 'client/shared/consts';
 import { Button, Grid } from '@material-ui/core';
 import { InputControl } from 'client/shared/components';
+import { useDispatch, useSelector } from 'react-redux';
+import { addTopicThunk, profileSelector } from 'client/core/store';
+import { FnActionProps } from 'client/shared/types';
 import { ADD_TOPIC_FORM_CONTROLS } from './AddTopicForm.config';
 
-export const AddTopicForm: React.FC = React.memo(() => {
-    // TODO: контракт будет реализован тут LP-110 (как заглушка пока SigninProps)
+interface AddTopicFormProps {
+    closeModal: FnActionProps
+}
+
+export const AddTopicForm: React.FC<AddTopicFormProps> = React.memo(({
+    closeModal,
+}) => {
     const {
         control,
         handleSubmit,
         errors,
-    } = useForm<SigninProps>();
+    } = useForm<AddTopicRequestProps>();
 
-    // TODO: контракт будет реализован тут LP-110 (как заглушка пока SigninProps)
-    const onSubmit = (data: SigninProps) => {
-        console.log(data);
+    const dispatch = useDispatch();
+    const profile = useSelector(profileSelector);
+
+    const onSubmit = (data: AddTopicRequestProps) => {
+        dispatch(addTopicThunk({ ...data, userId: profile.id }));
+        closeModal();
     };
 
     const controls = useMemo(

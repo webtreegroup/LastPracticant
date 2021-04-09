@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Button, Avatar } from '@material-ui/core';
+import { Grid, Button } from '@material-ui/core';
 import { useForm } from 'react-hook-form';
 import { ChangePasswordProps } from 'client/core/api';
 import {
@@ -8,14 +8,12 @@ import {
 import { InputControl } from 'client/shared/components';
 import { Link } from 'react-router-dom';
 import { ROUTES } from 'client/routing';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { editPasswordThunk } from 'client/core/store';
-import { profileSelector } from 'client/core/store/selectors';
 import { PROFILE_EDIT_PASSWORD_CONTROLS } from './ProfileEditPassword.config';
 
 export const ProfileEditPassword: React.FC = React.memo(() => {
     const dispatch = useDispatch();
-    const profile = useSelector(profileSelector);
 
     const { control, handleSubmit, errors } = useForm<ChangePasswordProps>();
 
@@ -27,8 +25,10 @@ export const ProfileEditPassword: React.FC = React.memo(() => {
         () => PROFILE_EDIT_PASSWORD_CONTROLS.map((inputConfig) => {
             const { name } = inputConfig;
             const error = errors[name as keyof typeof errors]?.message;
+
             return (
                     <InputControl
+                        key={inputConfig.name}
                         fullWidth
                         margin="dense"
                         error={Boolean(error)}
@@ -52,7 +52,6 @@ export const ProfileEditPassword: React.FC = React.memo(() => {
                     direction="column"
                     alignItems="center"
                 >
-                    <Avatar src={profile.avatar}>{LOCAL.AVATAR_DEFAULT}</Avatar>
                     {controls}
                 </Grid>
                 <Grid container item xs={12} justify="center" spacing={1}>

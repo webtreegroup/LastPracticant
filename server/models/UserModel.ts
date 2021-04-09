@@ -1,8 +1,8 @@
 import { Sequelize } from 'sequelize-typescript';
 import { DataTypes, Model } from 'sequelize';
-import { CommentModelProps } from './models.types';
+import { UserModelProps } from './models.types';
 
-export class CommentModel {
+export class UserModel {
     sequelize: Sequelize;
 
     table;
@@ -14,13 +14,13 @@ export class CommentModel {
     }
 
     init() {
-        return this.sequelize.define<CommentModelProps & Model>('comment', {
-            description: {
-                type: DataTypes.TEXT,
-            },
-            parentId: {
+        return this.sequelize.define<UserModelProps & Model>('user', {
+            id: {
                 type: DataTypes.INTEGER,
-                defaultValue: 0,
+                primaryKey: true,
+            },
+            name: {
+                type: DataTypes.STRING,
             },
         });
     }

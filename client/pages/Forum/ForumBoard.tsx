@@ -11,13 +11,13 @@ import { Button } from '@material-ui/core';
 import { withCheckAuth } from 'client/core/HOCs';
 import { useElementVisible } from 'client/core/hooks';
 import { LOCAL } from 'client/shared/consts';
-import { getTopicsThunk } from 'client/core/store';
-import { useDispatch } from 'react-redux';
-import { TOPICS } from './Forum.mock';
+import { getTopicsThunk, topicsSelector } from 'client/core/store';
+import { useDispatch, useSelector } from 'react-redux';
 import { columns, block } from './Forum.config';
 import { AddTopicForm } from './components';
 
 export const ForumBoardComponent: React.FC<PageComponentProps> = React.memo(({ title }) => {
+    const topics = useSelector(topicsSelector);
     const dispatch = useDispatch();
 
     const {
@@ -47,16 +47,18 @@ export const ForumBoardComponent: React.FC<PageComponentProps> = React.memo(({ t
                         onChangeVisible={handleChangeElementVisible}
                         title={LOCAL.FORUM_COLUMN_TOPIC}
                     >
-                        <AddTopicForm />
+                        <AddTopicForm closeModal={handleChangeElementVisible} />
                     </Popup>
                 </ButtonsToolbar>
                 <DataGrid
-                    rows={TOPICS}
+                    rows={topics || []}
                     columns={columns}
                     pageSize={10}
                     autoHeight
                     disableColumnMenu
                     disableColumnReorder
+                    // TODO: необходима доработка на бэке (нужен контракт с пагинацией), пока скрываем
+                    hideFooterPagination
                 />
             </Paper>
         </PageLayout>

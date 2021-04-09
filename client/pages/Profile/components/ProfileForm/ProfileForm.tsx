@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
-import { Grid, Button, Avatar } from '@material-ui/core';
+import { Grid, Button } from '@material-ui/core';
 import { useForm } from 'react-hook-form';
 import { CurrentUserInfoProps } from 'client/core/api';
 import {
@@ -16,7 +16,9 @@ import { PROFILE_FORM_CONTROLS } from './ProfileForm.config';
 export const ProfileForm: React.FC = React.memo(() => {
     const profile = useSelector(profileSelector);
 
-    const { control, reset } = useForm<CurrentUserInfoProps>();
+    const { control, reset } = useForm<CurrentUserInfoProps>({
+        defaultValues: profile,
+    });
 
     const controls = useMemo(
         () => PROFILE_FORM_CONTROLS.map((inputConfig) => (
@@ -32,7 +34,7 @@ export const ProfileForm: React.FC = React.memo(() => {
                     {...inputConfig}
                 />
         )),
-        [profile],
+        [],
     );
 
     useEffect(() => {
@@ -49,7 +51,6 @@ export const ProfileForm: React.FC = React.memo(() => {
                     direction="column"
                     alignItems="center"
                 >
-                    <Avatar src={profile?.avatar}>{LOCAL.AVATAR_DEFAULT}</Avatar>
                     {controls}
                 </Grid>
                 <Grid container item xs={12} justify="center" spacing={1}>
