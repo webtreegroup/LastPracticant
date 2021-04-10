@@ -13,6 +13,8 @@ export interface AddTopicRequestProps extends Omit<TopicModelProps, 'createdAt' 
 
 export interface AddCommentRequestProps extends Omit<CommentModelProps, 'createdAt' | 'updatedAt'> {}
 
+export interface UpdateCommentRequestProps extends Omit<CommentModelProps, 'createdAt' | 'updatedAt' | 'parendId'> {}
+
 export interface GetAllCommentsRequestProps {
     topicId: number
 }
@@ -50,7 +52,7 @@ export class ForumAPI extends BaseAPI {
         return ExpressForumAPI.post<AddCommentRequestProps, Response>('/comment', { data });
     }
 
-    static updateComment(data: AddCommentRequestProps) {
-        return ExpressForumAPI.put<AddCommentRequestProps, Response>('/comment', { data });
+    static updateComment(data: UpdateCommentRequestProps) {
+        return ExpressForumAPI.put<UpdateCommentRequestProps, Response>('/comment', { data });
     }
 }

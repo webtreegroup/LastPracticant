@@ -9,11 +9,9 @@ export class CommentController {
             where: {
                 topicId: req.params.topicId,
             },
-            include: [
-                {
-                    model: postgres.users.table,
-                },
-            ],
+            include: [{
+                model: postgres.users.table,
+            }],
             order: [
                 ['updatedAt', 'ASC'],
             ],
@@ -34,8 +32,10 @@ export class CommentController {
     }
 
     public static update(req: Request, res: Response) {
+        if (!req.body) return res.sendStatus(400);
+
         postgres.comments.table
-            .findByPk(req.params.id)
+            .findByPk(req.body.id)
             .then((comment) => {
                 if (!comment) {
                     return res.status(404).send({
@@ -43,7 +43,7 @@ export class CommentController {
                     });
                 }
                 return comment
-                    .update(req.body)
+                    .update({ emoji: req.body.emoji })
                     .then(() => res.status(200).send(comment))
                     .catch((error) => res.status(400).send(error));
             })

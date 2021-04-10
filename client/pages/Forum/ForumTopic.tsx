@@ -16,7 +16,7 @@ import {
     commentsSelector, currentTopicSelector, getCommentsThunk, getTopicByIdThunk,
 } from 'client/core/store';
 import { block } from './Forum.config';
-import { AddCommentForm, CommentsTree } from './components';
+import { AddCommentForm, AddEmojiForm, CommentsTree } from './components';
 import { composeCommentsArrayTree } from './Forum.utils';
 
 export const ForumTopicComponent: React.FC<PageComponentProps> = React.memo(({ title }) => {
@@ -26,15 +26,25 @@ export const ForumTopicComponent: React.FC<PageComponentProps> = React.memo(({ t
     const dispatch = useDispatch();
 
     const {
-        elementVisible,
-        handleChangeElementVisible,
+        elementVisible: commentFormVisible,
+        handleChangeElementVisible: handleSetCommentFormVisible,
+    } = useElementVisible();
+
+    const {
+        elementVisible: emojiFormVisible,
+        handleChangeElementVisible: handleSetEmojiFormVisible,
     } = useElementVisible();
 
     const [commentParentId, setCommentParentId] = useState(0);
 
     const handleAddComment = useCallback((parendId: number) => {
         setCommentParentId(parendId);
-        handleChangeElementVisible();
+        handleSetCommentFormVisible();
+    }, []);
+
+    const handleSetEmoji = useCallback((commentId: number) => {
+        setCommentParentId(commentId);
+        handleSetEmojiFormVisible();
     }, []);
 
     const handleStartConversation = useCallback(() => {
@@ -65,12 +75,23 @@ export const ForumTopicComponent: React.FC<PageComponentProps> = React.memo(({ t
                     {LOCAL.COMMON_PREFIXES.ADD} {LOCAL.FORUM_COLUMN_COMMENT}
                 </Button>
                 <Popup
-                    isVisible={elementVisible}
-                    onChangeVisible={handleChangeElementVisible}
+                    isVisible={commentFormVisible}
+                    onChangeVisible={handleSetCommentFormVisible}
                     title={LOCAL.FORUM_COLUMN_COMMENT}
                 >
                     <AddCommentForm
-                        closeModal={handleChangeElementVisible}
+                        closeModal={handleSetCommentFormVisible}
+                        topicId={params.id}
+                        parentId={commentParentId}
+                    />
+                </Popup>
+                <Popup
+                    isVisible={emojiFormVisible}
+                    onChangeVisible={handleSetEmojiFormVisible}
+                    title={`${LOCAL.COMMON_PREFIXES.ADD} emoji`}
+                >
+                    <AddEmojiForm
+                        closeModal={handleSetEmojiFormVisible}
                         topicId={params.id}
                         parentId={commentParentId}
                     />
@@ -78,6 +99,7 @@ export const ForumTopicComponent: React.FC<PageComponentProps> = React.memo(({ t
                 <CommentsTree
                     comments={composeCommentsArrayTree(comments)}
                     onAddComment={handleAddComment}
+                    onSetEmoji={handleSetEmoji}
                 />
             </Paper>
         </PageLayout>

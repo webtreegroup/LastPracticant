@@ -11,11 +11,13 @@ import { block } from './CommentsTree.config';
 interface CommentsTreeProps {
     comments: ForumTopicCommentProps[]
     onAddComment: FnActionRequiredProps<number>
+    onSetEmoji: FnActionRequiredProps<number>
 }
 
 export const CommentsTree: React.FC<CommentsTreeProps> = React.memo(({
     comments,
     onAddComment,
+    onSetEmoji,
 }) => {
     const emptyCommentsStub = (
         <div className={block('empty')}>
@@ -26,6 +28,7 @@ export const CommentsTree: React.FC<CommentsTreeProps> = React.memo(({
     const tree = useMemo(() => mapCommentsToTree(
         comments,
         onAddComment,
+        onSetEmoji,
     ) || emptyCommentsStub, [comments]);
 
     return (

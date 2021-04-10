@@ -14,7 +14,12 @@ export interface CommentModelProps {
     createdAt: Date
     updatedAt: Date
     topicId: number
+    emoji?: string
     parentId?: number
+}
+
+export interface EmojiParsedProps {
+    [key: string]: number[]
 }
 
 export interface UserModelProps {

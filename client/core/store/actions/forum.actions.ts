@@ -2,6 +2,7 @@ import {
     AddCommentRequestProps,
     AddTopicRequestProps,
     ForumAPI,
+    UpdateCommentRequestProps,
 } from 'client/core/api';
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
@@ -91,6 +92,21 @@ export const addCommentThunk = (
     dispatch(showLoaderAction());
 
     ForumAPI.addComment(data)
+        .then(() => {
+            dispatch(getCommentsThunk(data.topicId));
+        })
+        .catch(console.error)
+        .finally(() => {
+            dispatch(hideLoaderAction());
+        });
+};
+
+export const updateCommentThunk = (
+    data: UpdateCommentRequestProps,
+): ThunkAction<void, StoreProps, unknown, Action<string>> => (dispatch) => {
+    dispatch(showLoaderAction());
+
+    ForumAPI.updateComment(data)
         .then(() => {
             dispatch(getCommentsThunk(data.topicId));
         })

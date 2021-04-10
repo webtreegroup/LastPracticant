@@ -1,58 +1,28 @@
 import {
-    List, ListItem, ListItemText, Typography,
+    List, ListItem,
 } from '@material-ui/core';
-import { LOCAL } from 'client/shared/consts';
-import { FnActionRequiredProps } from 'client/shared/types';
-import { formatDate } from 'client/shared/utils';
-import React, { MouseEvent } from 'react';
-import { ForumTopicCommentProps } from '../../Forum.types';
-import { block } from './CommentsTree.config';
+import React from 'react';
 
-const formatCommentDescription = (description: string) => ` " — ${description}"`;
+import { FnActionProps, FnActionRequiredProps } from 'client/shared/types';
+import { ForumTopicCommentProps } from '../../Forum.types';
+import { Comment } from './components';
 
 export const mapCommentsToTree = (
     comments: ForumTopicCommentProps[],
     onAddComment: FnActionRequiredProps<number>,
+    onSetEmoji: FnActionProps,
 ) => {
-    const handleAddComment = (parendId: number) => (
-        e: MouseEvent,
-    ) => {
-        e.preventDefault();
-        onAddComment(parendId);
-    };
-
     const commentsMapped = comments.map((comment) => (
         <React.Fragment key={comment.id}>
-            <ListItem alignItems="flex-start">
-                <ListItemText
-                    primary={formatDate(comment.createdAt)}
-                    secondary={(
-                        <>
-                            <Typography
-                                component="span"
-                                variant="body2"
-                                color="textPrimary"
-                            >
-                                {comment.user.name}
-                            </Typography>
-                            {formatCommentDescription(comment.description)}
-                            <span className={block('reply')}>
-                                <a
-                                    onClick={handleAddComment(comment.id)}
-                                    href="#s"
-                                >
-                                    {LOCAL.COMMON_PREFIXES.REPLY}
-                                </a>
-                            </span>
-                        </>
-                    )}
-                />
-
-            </ListItem>
+            <Comment
+                comment={comment}
+                onAddComment={onAddComment}
+                onSetEmoji={onSetEmoji}
+            />
 
             {comment.children && (
                 <ListItem alignItems="flex-start">
-                    {mapCommentsToTree(comment.children, onAddComment)}
+                    {mapCommentsToTree(comment.children, onAddComment, onSetEmoji)}
                 </ListItem>
             )}
         </React.Fragment>
