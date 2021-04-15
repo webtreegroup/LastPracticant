@@ -5,6 +5,7 @@ import {
 
 // import { POSTGRES_CONNECT_OPTIONS } from '../../env';
 import path from 'path';
+// import pg from 'pg';
 import { TopicModel } from './TopicModel';
 import { CommentModel } from './CommentModel';
 import { UserModel } from './UserModel';
@@ -20,22 +21,39 @@ class PostgresConnector {
     users: UserModel;
 
     constructor() {
-        console.log('=============================', `${path.resolve()}/cert/root.crt`, '=============================');
+        // const client = new pg.Client('postgres://postgres1:<password>@rc1a-1qzpz2ebr53e84b6.mdb.yandexcloud.net:6432/postgres1?ssl=true');
+        // client.connect();
+        console.log('=============================', `${path.resolve()}/cert/CA.pem`, '=============================');
         // eslint-disable-next-line global-require
-        const cert = require('fs').readFileSync(`${path.resolve()}/cert/root.crt`);
+        const cert = require('fs').readFileSync(`${path.resolve()}/cert/CA.pem`);
         console.log('----------------------------');
         console.log(cert);
         console.log('----------------------------');
-        this.sequelize = new Sequelize('postgres://postgres1:<password>@rc1b-9ucb4ny2bxam8jy8.mdb.yandexcloud.net:6432/postgres1?ssl=true', {
+        this.sequelize = new Sequelize({
+            protocol: 'postgres',
             dialect: 'postgres',
+            database: 'postgres1',
+            password: 'postgres1',
+            username: 'postgres1',
+            host: 'rc1a-1qzpz2ebr53e84b6.mdb.yandexcloud.net',
+            port: 6432,
+            ssl: true,
             dialectOptions: {
                 ssl: {
-                    rejectUnauthorized: true,
-                    // eslint-disable-next-line global-require
-                    ca: cert,
+                    ssl: true,
+                    rejectUnauthorized: false,
                 },
             },
         });
+        // this.sequelize = new Sequelize('postgres://postgres1:<password>@rc1a-1qzpz2ebr53e84b6.mdb.yandexcloud.net:6432/postgres1?ssl=true', {
+        //     dialectOptions: {
+        //         ssl: {
+        //             require: true,
+        //             rejectUnauthorized: false,
+        //             ca: cert,
+        //         },
+        //     },
+        // });
         this.comments = new CommentModel(this.sequelize);
         this.topics = new TopicModel(this.sequelize);
         this.users = new UserModel(this.sequelize);
