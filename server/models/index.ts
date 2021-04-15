@@ -1,5 +1,5 @@
 import {
-    Sequelize,
+    Sequelize, SequelizeOptions,
 } from 'sequelize-typescript';
 
 import { POSTGRES_CONNECT_OPTIONS } from '../../env';
@@ -18,14 +18,7 @@ class PostgresConnector {
 
     constructor() {
         this.sequelize = new Sequelize(
-            process.env.POSTGRES_DATABASE as string,
-            process.env.POSTGRES_USERNAME as string,
-            process.env.POSTGRES_PASSWORD as string,
-            {
-                host: 'localhost',
-                dialect: 'postgres',
-                ...POSTGRES_CONNECT_OPTIONS,
-            },
+            POSTGRES_CONNECT_OPTIONS as SequelizeOptions,
         );
         this.comments = new CommentModel(this.sequelize);
         this.topics = new TopicModel(this.sequelize);
