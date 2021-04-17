@@ -27,7 +27,7 @@ const postgresCommonConnectOptions = {
 module.exports = {
     IS_DEV: isDev,
     MONGO_HOST: `mongodb://${isDev ? 'localhost' : 'mongo'}:27017`,
-    APP_PROD_URL: 'http://reykjavik-last-practicant-3.ya-praktikum.tech',
+    APP_PROD_URL: 'https://reykjavik-last-practicant-3.ya-praktikum.tech',
     APP_DEV_URL: 'http://localhost:5000',
     POSTGRES_CONNECT_OPTIONS: {
         ...postgresCommonConnectOptions,
