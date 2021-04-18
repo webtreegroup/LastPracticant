@@ -13,10 +13,15 @@ interface PageHtmlProps {
     state: StoreProps
     helmet: HelmetData;
     css: string
+    styleNonce: string
 }
 
 function getPageHtml({
-    html, state, helmet, css,
+    html,
+    state,
+    helmet,
+    css,
+    styleNonce,
 }: PageHtmlProps) {
     const staticMarkup = renderToStaticMarkup(
         <html lang="ru">
@@ -26,14 +31,16 @@ function getPageHtml({
                 {helmet.meta.toComponent()}
                 {helmet.link.toComponent()}
                 {helmet.script.toComponent()}
+                <meta property="csp-nonce" content={styleNonce} />
                 <link rel="icon" type="image/png" href="./idea.png" />
-                <style id="jss-server-side">${css}</style>
+                <style nonce={styleNonce} id="jss-server-side">${css}</style>
                 <link rel="stylesheet" href="/main.css" type="text/css" />
             </head>
 
             <body>
                 <div id="root" dangerouslySetInnerHTML={{ __html: html }} />
                 <script
+                    nonce={styleNonce}
                     dangerouslySetInnerHTML={{
                         __html: `window.__INITIAL_STATE__ = ${JSON.stringify(state)}`,
                     }}
@@ -47,7 +54,7 @@ function getPageHtml({
     return `<!DOCTYPE html> ${staticMarkup}`;
 }
 
-export const renderHtml = (reqUrl: string, state: StoreProps, store: Store) => {
+export const renderHtml = (reqUrl: string, state: StoreProps, store: Store, styleNonce: string) => {
     const context = {};
     const sheets = new ServerStyleSheets();
 
@@ -70,6 +77,7 @@ export const renderHtml = (reqUrl: string, state: StoreProps, store: Store) => {
             state,
             helmet,
             css,
+            styleNonce,
         }),
     };
 };

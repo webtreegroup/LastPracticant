@@ -9,6 +9,7 @@ import { renderBundle } from './middlewares/renderBundle';
 import { routing } from './routing';
 import { postgres } from './models';
 import { IS_DEV } from '../env';
+import { addCSP, generateNonce } from './middlewares';
 
 export class Server {
     private app;
@@ -34,6 +35,8 @@ export class Server {
             this.app.use(hotMiddleware(compiler));
         }
 
+        this.app.use(generateNonce);
+        this.app.use(addCSP);
         this.app.use(renderBundle);
     }
 

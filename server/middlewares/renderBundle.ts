@@ -23,7 +23,7 @@ export function renderBundle(req: Request, res: Response, next: NextFunction) {
         await dispatch(getCurrentUserInfoThunk(req));
 
         const state = store.getState();
-        const { html } = renderHtml(url, state, store);
+        const { html } = renderHtml(url, state, store, res.locals.styleNonce);
 
         res.send(html);
     };
