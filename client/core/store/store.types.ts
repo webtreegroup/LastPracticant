@@ -1,5 +1,6 @@
 import { SnackBarDataProps } from 'client/shared/components';
 import { RouterState } from 'connected-react-router';
+import { LeaderboardModelProps } from 'server/models/models.types';
 import { CurrentUserInfoProps, GetAllCommentsResponseProps, GetAllTopicsResponseProps } from '../api';
 
 export interface StoreGameProps {
@@ -28,4 +29,5 @@ export interface StoreProps {
     oauth: number | null
     snackbar: StoreSnackBarProps
     forum: StoreForumProps
+    leaderboard: LeaderboardModelProps[]
 }
