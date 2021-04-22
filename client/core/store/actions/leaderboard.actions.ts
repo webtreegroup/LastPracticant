@@ -7,7 +7,7 @@ import { hideLoaderAction, showLoaderAction } from './loader.actions';
 export const SET_PLAYERS_SCORES = 'SET_PLAYERS_SCORES';
 export const SET_CURRENT_PLAYER_SCORE = 'SET_CURRENT_PLAYER_SCORE';
 
-export const setLeaderboardAction = (payload: LeaderboardProps) => ({
+export const setPlayersScoresAction = (payload: LeaderboardProps) => ({
     type: SET_PLAYERS_SCORES,
     payload,
 });
@@ -15,9 +15,9 @@ export const setLeaderboardAction = (payload: LeaderboardProps) => ({
 export const getPlayersScoresThunk = (): ThunkAction<void, StoreProps, unknown, Action<string>> => (dispatch) => {
     dispatch(showLoaderAction());
 
-    LeaderboardAPI.getAllResults().then((playersScores) => {
+    LeaderboardAPI.getPlayersScores().then((playersScores) => {
         dispatch(
-            setLeaderboardAction({ playersScores }),
+            setPlayersScoresAction({ playersScores }),
         );
     })
         .catch(console.error)
@@ -27,5 +27,5 @@ export const getPlayersScoresThunk = (): ThunkAction<void, StoreProps, unknown, 
 };
 
 export const addResultToLeaderboardThunk = (data: AddResultRequestProps): ThunkAction<void, StoreProps, unknown, Action<string>> => () => {
-    LeaderboardAPI.addResult(data);
+    LeaderboardAPI.addPlayerScore(data);
 };

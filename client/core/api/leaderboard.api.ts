@@ -12,11 +12,11 @@ export interface GetAllResultsResponseProps extends LeaderboardModelProps {
 }
 
 export class LeaderboardAPI extends BaseAPI {
-    static getAllResults() {
+    static getPlayersScores() {
         return ExpressLeaderboardAPI.get<{}, GetAllResultsResponseProps[]>('/');
     }
 
-    static addResult(data: AddResultRequestProps) {
+    static addPlayerScore(data: AddResultRequestProps) {
         return ExpressLeaderboardAPI.post<AddResultRequestProps, Response>('/', { data });
     }
 }

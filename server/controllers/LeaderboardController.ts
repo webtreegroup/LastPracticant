@@ -3,8 +3,9 @@ import { Response, Request } from 'express';
 import { postgres } from '../models';
 
 export class LeaderboardController {
-    public static getAllResults(req: Request, res: Response) {
+    public static getPlayersScores(req: Request, res: Response) {
         postgres.leaderboard.table.findAll({
+            attributes: { exclude: ['userId'] },
             order: [
                 ['score', 'DESC'],
             ],
@@ -20,7 +21,7 @@ export class LeaderboardController {
             });
     }
 
-    public static addResult(req: Request, res: Response) {
+    public static addPlayerScore(req: Request, res: Response) {
         if (!req.body) return res.sendStatus(400);
 
         postgres.leaderboard.table
