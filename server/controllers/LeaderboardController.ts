@@ -15,7 +15,7 @@ export class LeaderboardController {
                 },
             ],
         })
-            .then((leaderboard) => res.status(200).send(leaderboard))
+            .then((playersScores) => res.status(200).send(playersScores))
             .catch((error) => {
                 res.status(400).send(error);
             });
@@ -27,7 +27,7 @@ export class LeaderboardController {
                 userId: req.params.playerId,
             },
         })
-            .then((playerScore) => res.status(200).send(playerScore))
+            .then((currentPlayerScore) => res.status(200).send(currentPlayerScore))
             .catch((error) => {
                 res.status(400).send(error);
             });
