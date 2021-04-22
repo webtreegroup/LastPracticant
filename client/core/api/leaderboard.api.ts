@@ -4,7 +4,7 @@ import { BaseAPI } from './base.api';
 
 const ExpressLeaderboardAPI = new HTTP('/internal/leaderboard');
 
-export interface AddResultRequestProps extends Omit<LeaderboardModelProps, 'createdAt' | 'updatedAt'> {}
+export interface AddResultRequestProps extends Omit<LeaderboardModelProps, 'createdAt' | 'updatedAt' | 'id'> {}
 
 export class LeaderboardAPI extends BaseAPI {
     static getAllResults() {

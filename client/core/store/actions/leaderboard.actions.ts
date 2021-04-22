@@ -1,4 +1,4 @@
-import { LeaderboardAPI } from 'client/core/api';
+import { AddResultRequestProps, LeaderboardAPI } from 'client/core/api';
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { LeaderboardModelProps } from 'server/models/models.types';
@@ -12,7 +12,7 @@ export const setLeaderboardAction = (payload: LeaderboardModelProps[]) => ({
     payload,
 });
 
-export const getTopicsThunk = (): ThunkAction<void, StoreProps, unknown, Action<string>> => (dispatch) => {
+export const getLeaderboardThunk = (): ThunkAction<void, StoreProps, unknown, Action<string>> => (dispatch) => {
     dispatch(showLoaderAction());
 
     LeaderboardAPI.getAllResults().then((leaderboard) => {
@@ -24,4 +24,8 @@ export const getTopicsThunk = (): ThunkAction<void, StoreProps, unknown, Action<
         .finally(() => {
             dispatch(hideLoaderAction());
         });
+};
+
+export const addResultToLeaderboardThunk = (data: AddResultRequestProps): ThunkAction<void, StoreProps, unknown, Action<string>> => () => {
+    LeaderboardAPI.addResult(data);
 };

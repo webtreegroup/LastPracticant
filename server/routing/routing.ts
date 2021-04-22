@@ -6,6 +6,7 @@ import {
     CommentController,
     ProfileController,
     TopicController,
+    LeaderboardController,
 } from '../controllers';
 
 export const routing = (app: Express) => {
@@ -31,6 +32,10 @@ export const routing = (app: Express) => {
     app.get('/api/v2/internal/forum/comment/:topicId', checkAuth, CommentController.getAll);
     app.post('/api/v2/internal/forum/comment', checkAuth, jsonParser, CommentController.add);
     app.put('/api/v2/internal/forum/comment', checkAuth, jsonParser, CommentController.update);
+
+    /** Таблица лидеров */
+    app.get('/api/v2/internal/leaderboard', checkAuth, LeaderboardController.getAllResults);
+    app.post('/api/v2/internal/leaderboard', checkAuth, jsonParser, LeaderboardController.addResult);
 
     /** Профайл */
     app.put('/api/v2/user/profile', jsonParser, ProfileController.change);
