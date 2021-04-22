@@ -6,7 +6,7 @@ export class LeaderboardController {
     public static getAllResults(req: Request, res: Response) {
         postgres.leaderboard.table.findAll({
             order: [
-                ['score', 'ASC'],
+                ['score', 'DESC'],
             ],
             include: [
                 {

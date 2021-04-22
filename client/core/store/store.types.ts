@@ -1,13 +1,19 @@
 import { SnackBarDataProps } from 'client/shared/components';
 import { RouterState } from 'connected-react-router';
-import { LeaderboardModelProps } from 'server/models/models.types';
-import { CurrentUserInfoProps, GetAllCommentsResponseProps, GetAllTopicsResponseProps } from '../api';
+import {
+    CurrentUserInfoProps, GetAllCommentsResponseProps, GetAllResultsResponseProps, GetAllTopicsResponseProps,
+} from '../api';
 
 export interface StoreGameProps {
     isOver?: boolean
     isPause?: boolean
     score?: number
     currentLevel?: number
+}
+
+export interface LeaderboardProps {
+    playersScores?: GetAllResultsResponseProps[]
+    currentPlayerScore?: GetAllResultsResponseProps
 }
 
 export interface StoreForumProps {
@@ -29,5 +35,5 @@ export interface StoreProps {
     oauth: number | null
     snackbar: StoreSnackBarProps
     forum: StoreForumProps
-    leaderboard: LeaderboardModelProps[]
+    leaderboard: LeaderboardProps
 }
