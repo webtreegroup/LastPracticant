@@ -16,6 +16,10 @@ export class LeaderboardAPI extends BaseAPI {
         return ExpressLeaderboardAPI.get<{}, GetAllResultsResponseProps[]>('/');
     }
 
+    static getScoreByPlayerId(playerId: number) {
+        return ExpressLeaderboardAPI.get<{}, GetAllResultsResponseProps>(`/${playerId}`);
+    }
+
     static addPlayerScore(data: AddResultRequestProps) {
         return ExpressLeaderboardAPI.post<AddResultRequestProps, Response>('/', { data });
     }

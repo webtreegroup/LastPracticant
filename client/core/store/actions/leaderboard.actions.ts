@@ -12,12 +12,31 @@ export const setPlayersScoresAction = (payload: LeaderboardProps) => ({
     payload,
 });
 
+export const setCurrentPlayerScoreAction = (payload: LeaderboardProps) => ({
+    type: SET_CURRENT_PLAYER_SCORE,
+    payload,
+});
+
 export const getPlayersScoresThunk = (): ThunkAction<void, StoreProps, unknown, Action<string>> => (dispatch) => {
     dispatch(showLoaderAction());
 
     LeaderboardAPI.getPlayersScores().then((playersScores) => {
         dispatch(
             setPlayersScoresAction({ playersScores }),
+        );
+    })
+        .catch(console.error)
+        .finally(() => {
+            dispatch(hideLoaderAction());
+        });
+};
+
+export const getScoreByPlayerIdThunk = (playerId: number): ThunkAction<void, StoreProps, unknown, Action<string>> => (dispatch) => {
+    dispatch(showLoaderAction());
+
+    LeaderboardAPI.getScoreByPlayerId(playerId).then((currentPlayerScore) => {
+        dispatch(
+            setCurrentPlayerScoreAction({ currentPlayerScore }),
         );
     })
         .catch(console.error)

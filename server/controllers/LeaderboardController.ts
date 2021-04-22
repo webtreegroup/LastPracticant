@@ -21,6 +21,18 @@ export class LeaderboardController {
             });
     }
 
+    public static getScoreByPlayerId(req: Request, res: Response) {
+        postgres.leaderboard.table.findOne({
+            where: {
+                userId: req.params.playerId,
+            },
+        })
+            .then((playerScore) => res.status(200).send(playerScore))
+            .catch((error) => {
+                res.status(400).send(error);
+            });
+    }
+
     public static addPlayerScore(req: Request, res: Response) {
         if (!req.body) return res.sendStatus(400);
 

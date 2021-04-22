@@ -35,6 +35,7 @@ export const routing = (app: Express) => {
 
     /** Таблица лидеров */
     app.get('/api/v2/internal/leaderboard', checkAuth, LeaderboardController.getPlayersScores);
+    app.get('/api/v2/internal/leaderboard/:playerId', checkAuth, LeaderboardController.getScoreByPlayerId);
     app.post('/api/v2/internal/leaderboard', checkAuth, jsonParser, LeaderboardController.addPlayerScore);
 
     /** Профайл */
