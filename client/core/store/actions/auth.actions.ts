@@ -9,6 +9,7 @@ import { ROUTES } from 'client/routing';
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { push } from 'connected-react-router';
+import { LOCAL } from 'client/shared/consts';
 import { StoreProps } from '../store.types';
 import { hideLoaderAction, showLoaderAction } from './loader.actions';
 import { showSnackBarAction } from './snackbar.actions';
@@ -77,12 +78,8 @@ export const signinThunk = (
         .then(() => {
             dispatch(push(ROUTES.HOME.path));
         })
-        .catch((response) => {
-            response.json().then((result: any) => {
-                dispatch(
-                    showSnackBarAction({ type: 'error', msg: result?.reason }),
-                );
-            });
+        .catch(() => {
+            dispatch(showSnackBarAction({ type: 'error', msg: LOCAL.ERROR_SIGNIN }));
         })
         .finally(() => {
             dispatch(hideLoaderAction());
