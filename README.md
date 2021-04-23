@@ -16,6 +16,15 @@ https://last-practicant.herokuapp.com/ (Heroku - старая версия, бо
 2) npm run ssr-start
 
 # Об игре
+
+## Поддержка браузерами
+- Chrome 40+ (основная платформа)
+- Edge 79+
+- Safari 10+
+- Opera 27+
+
+PS. Firefox не поддерживается, в первую очередь из за плохой поддержки `nonce` (требовается для нормальной работы инлайновых стилей Material UI в связи с Content Security Policy)
+
 ## Название игры
 Последний практикант
 

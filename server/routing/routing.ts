@@ -7,6 +7,7 @@ import {
     ProfileController,
     TopicController,
     LeaderboardController,
+    UserController,
 } from '../controllers';
 
 export const routing = (app: Express) => {
@@ -37,6 +38,10 @@ export const routing = (app: Express) => {
     app.get('/api/v2/internal/leaderboard', checkAuth, LeaderboardController.getPlayersScores);
     app.get('/api/v2/internal/leaderboard/:playerId', checkAuth, LeaderboardController.getScoreByPlayerId);
     app.post('/api/v2/internal/leaderboard', checkAuth, jsonParser, LeaderboardController.addPlayerScore);
+
+    /** Настройки */
+    app.get('/api/v2/internal/settings/:userId', checkAuth, UserController.getUserSettings);
+    app.post('/api/v2/internal/settings/:userId', checkAuth, jsonParser, UserController.updateUserSettings);
 
     /** Профайл */
     app.put('/api/v2/user/profile', jsonParser, ProfileController.change);
