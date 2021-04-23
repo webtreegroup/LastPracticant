@@ -2,6 +2,7 @@ import { Response, Request } from 'express';
 
 import { postgres } from '../models';
 import { RESPONSES_MESSAGES } from './controllers.consts';
+import { users } from './controllers.mixins';
 
 export class TopicController {
     public static getAll(req: Request, res: Response) {
@@ -10,11 +11,7 @@ export class TopicController {
             order: [
                 ['updatedAt', 'ASC'],
             ],
-            include: [
-                {
-                    model: postgres.users.table,
-                },
-            ],
+            include: [users],
         })
             .then((topics) => res.status(200).send(topics))
             .catch((error) => {

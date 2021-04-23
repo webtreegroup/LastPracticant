@@ -30,4 +30,5 @@ export interface EmojiParsedProps {
 export interface UserModelProps extends CommonModelProps {
     userExternalId: number
     name: string
+    settings: string
 }

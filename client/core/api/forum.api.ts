@@ -25,7 +25,7 @@ export interface GetAllCommentsResponseProps extends CommentModelProps {
 
 export class ForumAPI extends BaseAPI {
     static getAllTopics() {
-        return ExpressForumAPI.get<{}, GetAllTopicsResponseProps[]>('/topic');
+        return ExpressForumAPI.get<{}, GetAllTopicsResponseProps[]>('/topics');
     }
 
     static getTopicById(data: GetAllCommentsRequestProps) {
@@ -41,7 +41,7 @@ export class ForumAPI extends BaseAPI {
     }
 
     static getAllComments(data: GetAllCommentsRequestProps) {
-        return ExpressForumAPI.get<{}, GetAllCommentsResponseProps[]>(`/comment/${data.topicId}`);
+        return ExpressForumAPI.get<{}, GetAllCommentsResponseProps[]>(`/comments/${data.topicId}`);
     }
 
     static addComment(data: AddCommentRequestProps) {
