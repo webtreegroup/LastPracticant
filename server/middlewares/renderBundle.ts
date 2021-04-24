@@ -22,8 +22,7 @@ export function renderBundle(req: Request, res: Response, next: NextFunction) {
         const dispatch = store.dispatch as ThunkDispatch<StoreProps, void, AnyAction>;
 
         await dispatch(getCurrentUserInfoThunk(req));
-        console.log('==================', req.url, '==================');
-        await prepareStoreForClient(dispatch, req.url);
+        await prepareStoreForClient(dispatch, req);
 
         const state = store.getState();
         const { html } = renderHtml(url, state, store, res.locals.styleNonce);

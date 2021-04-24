@@ -8,3 +8,15 @@ export const fetchTopics = () => postgres.topics.table.findAll({
     ],
     include: [users],
 });
+
+export const fetchTopicById = (topicId: string) => postgres.topics.table.findByPk(topicId);
+
+export const fetchTopicComments = (topicId: string) => postgres.comments.table.findAll({
+    where: {
+        topicId,
+    },
+    include: [users],
+    order: [
+        ['id', 'ASC'],
+    ],
+});
