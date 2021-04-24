@@ -1,5 +1,4 @@
 import {
-    API_SERVER_HOST,
     AuthAPI,
     CurrentUserInfoProps,
     SigninProps,
@@ -26,12 +25,7 @@ export const setCurrentUserInfoAction = (payload: CurrentUserInfoProps) => ({
 
 export const getCurrentUserInfoThunk = (): ThunkAction<void, StoreProps, unknown, Action<string>> => (dispatch) => {
     AuthAPI.getCurrentUserInfo().then((response) => {
-        dispatch(
-            setCurrentUserInfoAction({
-                ...response,
-                avatar: response.avatar && API_SERVER_HOST + response.avatar,
-            }),
-        );
+        dispatch(setCurrentUserInfoAction(response));
         dispatch(changeAuth(true));
     }).catch(() => {
         dispatch(changeAuth(false));
