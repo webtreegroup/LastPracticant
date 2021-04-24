@@ -1,6 +1,5 @@
 import { CommentModelProps, TopicModelProps } from 'server/models/models.types';
 import { HTTP } from './api';
-import { UserInfoProps } from './auth.api';
 import { BaseAPI } from './base.api';
 
 const ExpressForumAPI = new HTTP('/internal/forum');
@@ -15,21 +14,13 @@ export interface GetAllCommentsRequestProps {
     topicId: number
 }
 
-export interface GetAllTopicsResponseProps extends TopicModelProps {
-    user: UserInfoProps
-}
-
-export interface GetAllCommentsResponseProps extends CommentModelProps {
-    user: UserInfoProps
-}
-
 export class ForumAPI extends BaseAPI {
     static getAllTopics() {
-        return ExpressForumAPI.get<{}, GetAllTopicsResponseProps[]>('/topics');
+        return ExpressForumAPI.get<{}, TopicModelProps[]>('/topics');
     }
 
     static getTopicById(data: GetAllCommentsRequestProps) {
-        return ExpressForumAPI.get<{}, GetAllTopicsResponseProps>(`/topic/${data.topicId}`);
+        return ExpressForumAPI.get<{}, TopicModelProps>(`/topic/${data.topicId}`);
     }
 
     static addTopic(data: AddTopicRequestProps) {
@@ -41,7 +32,7 @@ export class ForumAPI extends BaseAPI {
     }
 
     static getAllComments(data: GetAllCommentsRequestProps) {
-        return ExpressForumAPI.get<{}, GetAllCommentsResponseProps[]>(`/comments/${data.topicId}`);
+        return ExpressForumAPI.get<{}, CommentModelProps[]>(`/comments/${data.topicId}`);
     }
 
     static addComment(data: AddCommentRequestProps) {

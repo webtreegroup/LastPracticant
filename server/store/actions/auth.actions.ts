@@ -13,8 +13,7 @@ export const getCurrentUserInfoThunk = (req: Request): ThunkAction<void, StorePr
 
         dispatch(setCurrentUserInfoAction(payload));
         dispatch(changeAuth(true));
-    })
-        .catch(() => {
-            dispatch(changeAuth(false));
-        });
+    }).catch(() => {
+        dispatch(changeAuth(false));
+    });
 };

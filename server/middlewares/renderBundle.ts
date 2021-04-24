@@ -7,6 +7,7 @@ import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import fetch from 'node-fetch';
 import { getCurrentUserInfoThunk } from 'server/store/actions';
+import { getTopicsThunk } from 'server/store/actions/forum.actions';
 import { defaultState } from '../store/initialState';
 import { renderHtml } from './renderHtml';
 
@@ -21,6 +22,7 @@ export function renderBundle(req: Request, res: Response, next: NextFunction) {
         const dispatch = store.dispatch as ThunkDispatch<StoreProps, void, AnyAction>;
 
         await dispatch(getCurrentUserInfoThunk(req));
+        await dispatch(getTopicsThunk());
 
         const state = store.getState();
         const { html } = renderHtml(url, state, store, res.locals.styleNonce);

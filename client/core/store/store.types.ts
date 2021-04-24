@@ -1,7 +1,8 @@
 import { SnackBarDataProps } from 'client/shared/components';
 import { RouterState } from 'connected-react-router';
+import { CommentModelProps, TopicModelProps } from 'server/models/models.types';
 import {
-    CurrentUserInfoProps, GetAllCommentsResponseProps, GetAllResultsResponseProps, GetAllTopicsResponseProps,
+    CurrentUserInfoProps, GetAllResultsResponseProps,
 } from '../api';
 
 export interface StoreGameProps {
@@ -17,9 +18,9 @@ export interface LeaderboardProps {
 }
 
 export interface StoreForumProps {
-    topics?: GetAllTopicsResponseProps[]
-    currentTopic?: GetAllTopicsResponseProps
-    comments?: GetAllCommentsResponseProps[]
+    topics?: TopicModelProps[]
+    currentTopic?: TopicModelProps
+    comments?: CommentModelProps[]
 }
 
 export interface StoreSnackBarProps extends SnackBarDataProps {
