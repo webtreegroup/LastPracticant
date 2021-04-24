@@ -9,7 +9,9 @@ import { fetchTopics } from 'server/controllers/controllers.utils';
 export const getTopicsThunk = (): ThunkAction<void, StoreProps, unknown, Action<string>> => async (
     dispatch,
 ) => {
-    await fetchTopics.then((topics) => {
+    await fetchTopics().then((response) => {
+        const topics = response.map((el) => el.get({ plain: true }));
+
         dispatch(
             setTopicsAction({ topics }),
         );

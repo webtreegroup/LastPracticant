@@ -6,7 +6,7 @@ import { fetchTopics } from './controllers.utils';
 
 export class TopicController {
     public static getAll(req: Request, res: Response) {
-        fetchTopics
+        fetchTopics()
             .then((topics) => res.status(200).send(topics))
             .catch((error) => {
                 res.status(400).send(error);
