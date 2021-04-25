@@ -36,7 +36,7 @@ const SettingsComponent: React.FC<PageComponentProps> = ({ title }) => {
                 <FormControlLabel
                     control={(
                         <Switch
-                            checked={userSettings.colorTheme === ColorThemes.Dark}
+                            checked={userSettings.colorTheme !== ColorThemes.Light}
                             onChange={handleChangeColorTheme}
                             name="isColorThemeDark"
                             inputProps={{ 'aria-label': 'secondary checkbox' }}

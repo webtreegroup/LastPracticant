@@ -26,9 +26,7 @@ export const ForumBoardComponent: React.FC<PageComponentProps> = React.memo(({ t
     } = useElementVisible();
 
     useEffect(() => {
-        if (!topics) {
-            dispatch(getTopicsThunk());
-        }
+        dispatch(getTopicsThunk());
     }, []);
 
     return (
