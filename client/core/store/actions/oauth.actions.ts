@@ -32,15 +32,12 @@ export const signinWithYandexThunk = (
     code: string,
 ): ThunkAction<void, StoreProps, unknown, Action<string>> => (dispatch) => {
     dispatch(showLoaderAction());
-    console.log('--------------', 1, '--------------');
 
     OAuthAPI.signinWithYandex({ code })
         .then(() => {
-            console.log('--------------', 2, '--------------');
             dispatch(getCurrentUserInfoThunk());
         })
         .then(() => {
-            console.log('--------------', 3, '--------------');
             dispatch(push(ROUTES.HOME.path));
         })
         .catch(console.error)
