@@ -1,4 +1,3 @@
-import { APP_DEV_URL, APP_PROD_URL, IS_DEV } from '../../../env';
 import { HTTP } from './api';
 import { BaseAPI } from './base.api';
 
@@ -18,6 +17,6 @@ export class OAuthAPI extends BaseAPI {
     }
 
     static getServiceId() {
-        return ExpressOAuthAPI.get<{}, TokenProps>(`/service-id?redirect_uri=${IS_DEV ? APP_DEV_URL : APP_PROD_URL}`);
+        return ExpressOAuthAPI.get<{}, TokenProps>('/service-id');
     }
 }
