@@ -9,7 +9,7 @@ import { ColorThemeContext } from './ColorTheme.context';
 import { ColorThemes } from './ColorTheme.types';
 import { isThemeColorDark, isThemeColorLight } from './ColorTheme.utils';
 
-const storageKey = 'color-theme';
+const storageKey = 'colorTheme';
 
 export const ColorThemeContextProvider: FC = React.memo(({ children }) => {
     const colorThemeFromStorage = !isServer ? localStorage.getItem(storageKey) as ColorThemes : undefined;

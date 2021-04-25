@@ -8,6 +8,8 @@ import { FormControlLabel, Switch } from '@material-ui/core';
 import { LOCAL } from 'client/shared/consts';
 import { ColorThemeContext, ColorThemes } from 'client/core/context';
 import { isThemeColorDark } from 'client/core/context/ColorTheme/ColorTheme.utils';
+// import { useDispatch } from 'react-redux';
+// import { updateUserSettingsThunk } from 'client/core/store';
 
 interface SettingsState {
     isColorThemeDark: boolean
@@ -15,6 +17,7 @@ interface SettingsState {
 
 const SettingsComponent: React.FC<PageComponentProps> = ({ title }) => {
     const { updateTheme, theme } = useContext(ColorThemeContext);
+    // const dispatch = useDispatch();
 
     const [settings, setSettings] = React.useState<SettingsState>({
         isColorThemeDark: isThemeColorDark(theme),
@@ -29,6 +32,7 @@ const SettingsComponent: React.FC<PageComponentProps> = ({ title }) => {
 
     useEffect(() => {
         updateTheme(settings.isColorThemeDark ? ColorThemes.Dark : ColorThemes.Light);
+        // dispatch(updateUserSettingsThunk());
     }, [settings]);
 
     return (

@@ -4,6 +4,7 @@ import { CommentModelProps, TopicModelProps } from 'server/models/models.types';
 import {
     CurrentUserInfoProps, GetAllResultsResponseProps,
 } from '../api';
+import { ColorThemes } from '../context';
 
 export interface StoreGameProps {
     isOver?: boolean
@@ -27,6 +28,10 @@ export interface StoreSnackBarProps extends SnackBarDataProps {
     isVisible: boolean
 }
 
+export interface UserSettingsProps {
+    colorTheme: ColorThemes
+}
+
 export interface StoreProps {
     router: RouterState
     loader: boolean
@@ -37,4 +42,5 @@ export interface StoreProps {
     snackbar: StoreSnackBarProps
     forum: StoreForumProps
     leaderboard: LeaderboardProps
+    userSettings: UserSettingsProps
 }

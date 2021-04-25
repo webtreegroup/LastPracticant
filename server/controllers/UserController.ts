@@ -19,7 +19,7 @@ export class UserController {
 
     public static updateUserSettings(req: Request, res: Response) {
         postgres.users.table
-            .findByPk(req.params.userId)
+            .findByPk(req.body.id)
             .then((user) => {
                 if (!user) {
                     return res.status(404).send({
@@ -27,7 +27,7 @@ export class UserController {
                     });
                 }
                 return user
-                    .update(req.body)
+                    .update({ settings: req.body.settings })
                     .then(() => res.status(200).send(user))
                     .catch((error) => res.status(400).send(error));
             })

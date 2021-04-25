@@ -41,7 +41,7 @@ export const routing = (app: Express) => {
 
     /** Настройки */
     app.get('/api/v2/internal/settings/:userId', checkAuth, UserController.getUserSettings);
-    app.post('/api/v2/internal/settings/:userId', checkAuth, jsonParser, UserController.updateUserSettings);
+    app.put('/api/v2/internal/settings', checkAuth, jsonParser, UserController.updateUserSettings);
 
     /** Профайл */
     app.put('/api/v2/user/profile', jsonParser, ProfileController.change);
