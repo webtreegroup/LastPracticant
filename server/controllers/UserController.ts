@@ -2,10 +2,11 @@ import { Response, Request } from 'express';
 
 import { postgres } from '../models';
 import { RESPONSES_MESSAGES } from './controllers.consts';
+import { fetchUserSettings } from './controllers.utils';
 
 export class UserController {
     public static getUserSettings(req: Request, res: Response) {
-        postgres.users.table.findByPk(req.params.userId)
+        fetchUserSettings(Number(req.params.userId))
             .then((user) => {
                 if (!user) {
                     return res.status(404).send({

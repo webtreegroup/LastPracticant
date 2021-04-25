@@ -20,3 +20,5 @@ export const fetchTopicComments = (topicId: string) => postgres.comments.table.f
         ['id', 'ASC'],
     ],
 });
+
+export const fetchUserSettings = (userId: number) => postgres.users.table.findByPk(userId);

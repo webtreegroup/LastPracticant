@@ -36,9 +36,6 @@ export const updateUserSettingsThunk = (
     dispatch(showLoaderAction());
 
     SettingsAPI.updateUserSettings(data)
-        .then(() => {
-            dispatch(getUserSettingsThunk(data.id));
-        })
         .catch(console.error)
         .finally(() => {
             dispatch(hideLoaderAction());

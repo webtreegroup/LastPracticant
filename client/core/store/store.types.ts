@@ -1,10 +1,10 @@
+import { ColorThemes } from 'client/pages/Settings/Settings.config';
 import { SnackBarDataProps } from 'client/shared/components';
 import { RouterState } from 'connected-react-router';
 import { CommentModelProps, TopicModelProps } from 'server/models/models.types';
 import {
     CurrentUserInfoProps, GetAllResultsResponseProps,
 } from '../api';
-import { ColorThemes } from '../context';
 
 export interface StoreGameProps {
     isOver?: boolean
