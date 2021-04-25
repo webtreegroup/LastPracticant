@@ -16,7 +16,7 @@ export const App: React.FC = () => {
     const userSettings = useSelector(settingsSelector);
 
     const themeSettings = useMemo(() => createMuiTheme({
-        palette: userSettings.colorTheme === ColorThemes.Dark ? DARK_THEME : LIGHT_THEME,
+        palette: userSettings.colorTheme === ColorThemes.Light ? LIGHT_THEME : DARK_THEME,
     }), [userSettings]);
 
     useEffect(() => {
