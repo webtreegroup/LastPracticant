@@ -5,7 +5,10 @@ import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ANIMATION, CONTROLS } from './GameCanvas.config';
 import { DrawCanvasProps } from './GamePainter';
+import { GameSound } from './GameSound';
 import { CanvasResourcesProps, ResourcesLoader, ResourcesProps } from './ResourcesLoader';
+import heroDamage from './audio/wilhelm_scream.mp3';
+import enemyDamage from './audio/explosion.mp3';
 
 export type DrawCanvasFn = (
     props: DrawCanvasProps,
@@ -31,6 +34,10 @@ export const useCanvas = (drawCanvas: DrawCanvasFn, resources?: CanvasResourcesP
 
         const canvas = canvasRef.current;
         const ctx = canvas?.getContext('2d');
+        const sounds = {
+            heroDamage: new GameSound(heroDamage),
+            enemyDamage: new GameSound(enemyDamage),
+        };
 
         if (!ctx) return;
 
@@ -61,6 +68,7 @@ export const useCanvas = (drawCanvas: DrawCanvasFn, resources?: CanvasResourcesP
                 resources: loadedResources,
                 keyPress,
                 frameCount,
+                sounds,
             }, handleGameOver, handleGamePause);
 
             keyPress = null;
@@ -80,6 +88,9 @@ export const useCanvas = (drawCanvas: DrawCanvasFn, resources?: CanvasResourcesP
         return () => {
             window.cancelAnimationFrame(animationFrameId);
             document.removeEventListener('keydown', handleHeroAction, false);
+            Object.values(sounds).forEach((sound) => {
+                sound.remove();
+            });
         };
     }, [gameState]);
 
