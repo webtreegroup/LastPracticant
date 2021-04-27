@@ -1,6 +1,6 @@
 import './Game.css';
 
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { PageComponentProps } from 'client/shared/types';
 import {
     GamePainter, GameCanvas, PageLayout, Meta,
@@ -13,7 +13,8 @@ import { useSelector } from 'react-redux';
 import { gameSelector } from 'client/core/store';
 import { withCheckAuth } from 'client/core/HOCs';
 import { isServer } from 'client/core/store/store.consts';
-import { GAME_RESOURSES, GAME_VIEWPORT } from './Game.config';
+import backroundSound from 'client/core/components/GameCanvas/audio/game-background-sound.mp3';
+import { GameMusicTheme, GAME_RESOURSES, GAME_VIEWPORT } from './Game.config';
 import { GameOver } from './GameOver';
 import { GameNextLevel } from './GameNextLevel';
 
@@ -35,6 +36,10 @@ const GameComponent: React.FC<PageComponentProps> = React.memo(({ title }) => {
     }, [
         gameState,
     ]);
+
+    useEffect(() => {
+        GameMusicTheme?.change(backroundSound);
+    }, []);
 
     return (
         <PageLayout className={block()} goBackLink={ROUTES.GAME_START.path}>

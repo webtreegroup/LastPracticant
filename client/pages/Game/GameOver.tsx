@@ -8,7 +8,9 @@ import { LOCAL } from 'client/shared/consts';
 import { useDispatch, useSelector } from 'react-redux';
 import { gameResetAction } from 'client/core/store/actions/game.actions';
 import { Link } from '@material-ui/core';
+import interfaceSound from 'client/core/components/GameCanvas/audio/interface-background-sound.mp3';
 import gameOver from './game-over.png';
+import { GameMusicTheme } from './Game.config';
 
 interface GameOverProps extends PageComponentProps, StoreGameProps {}
 
@@ -32,6 +34,8 @@ export const GameOver: React.FC<GameOverProps> = React.memo(({
             userId: profile.id,
             score,
         }));
+
+        GameMusicTheme?.change(interfaceSound);
     }, [score]);
 
     return (
