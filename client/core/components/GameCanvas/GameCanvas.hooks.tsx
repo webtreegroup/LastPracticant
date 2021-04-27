@@ -9,6 +9,7 @@ import { GameSound } from './GameSound';
 import { CanvasResourcesProps, ResourcesLoader, ResourcesProps } from './ResourcesLoader';
 import heroDamage from './audio/wilhelm_scream.mp3';
 import enemyDamage from './audio/explosion.mp3';
+import backroundSound from './audio/background_sound.mp3';
 
 export type DrawCanvasFn = (
     props: DrawCanvasProps,
@@ -37,6 +38,7 @@ export const useCanvas = (drawCanvas: DrawCanvasFn, resources?: CanvasResourcesP
         const sounds = {
             heroDamage: new GameSound(heroDamage),
             enemyDamage: new GameSound(enemyDamage),
+            backroundSound: new GameSound(backroundSound),
         };
 
         if (!ctx) return;
@@ -61,6 +63,8 @@ export const useCanvas = (drawCanvas: DrawCanvasFn, resources?: CanvasResourcesP
             const shiftTime = time - startTime;
             const shift = (shiftTime / ANIMATION.secDivider);
             frameCount++;
+
+            sounds.backroundSound.play();
 
             drawCanvas({
                 ctx,

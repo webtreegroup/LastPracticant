@@ -229,7 +229,7 @@ export class GamePainter {
                     });
                     this.enemies.army.splice(i, 1);
                     this.hero.shots.splice(j, 1);
-                    options.sounds?.enemyDamage.play();
+                    options.sounds?.enemyDamage.trigger();
 
                     if (enemy.type === 'reviewer') {
                         levelComplite = true;
@@ -247,7 +247,7 @@ export class GamePainter {
                 this.enemies.army.splice(i, 1);
 
                 this.hero.lifes--;
-                options.sounds?.heroDamage.play();
+                options.sounds?.heroDamage.trigger();
 
                 if (enemy.type === 'reviewer') {
                     isBossWin = true;

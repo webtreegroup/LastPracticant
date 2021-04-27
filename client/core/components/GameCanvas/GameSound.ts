@@ -23,6 +23,21 @@ export class GameSound {
         this.sound.pause();
     }
 
+    reload() {
+        this.sound.load();
+    }
+
+    trigger() {
+        this.reload();
+        this.play();
+    }
+
+    change(src: string) {
+        this.sound.src = src;
+        this.reload();
+        this.play();
+    }
+
     remove() {
         this.sound.remove();
     }
