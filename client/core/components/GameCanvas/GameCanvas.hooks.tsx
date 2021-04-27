@@ -1,15 +1,12 @@
 import { gameSelector, StoreGameProps } from 'client/core/store';
 import { gameOverAction, gamePauseAction } from 'client/core/store/actions/game.actions';
+import { setGameSounds } from 'client/pages/Game/Game.config';
 import { FnActionRequiredProps } from 'client/shared/types';
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ANIMATION, CONTROLS } from './GameCanvas.config';
 import { DrawCanvasProps } from './GamePainter';
-import { GameSound } from './GameSound';
 import { CanvasResourcesProps, ResourcesLoader, ResourcesProps } from './ResourcesLoader';
-import heroDamage from './audio/wilhelm_scream.mp3';
-import enemyDamage from './audio/explosion.mp3';
-import backroundSound from './audio/background_sound.mp3';
 
 export type DrawCanvasFn = (
     props: DrawCanvasProps,
@@ -35,11 +32,7 @@ export const useCanvas = (drawCanvas: DrawCanvasFn, resources?: CanvasResourcesP
 
         const canvas = canvasRef.current;
         const ctx = canvas?.getContext('2d');
-        const sounds = {
-            heroDamage: new GameSound(heroDamage),
-            enemyDamage: new GameSound(enemyDamage),
-            backroundSound: new GameSound(backroundSound),
-        };
+        const sounds = setGameSounds?.();
 
         if (!ctx) return;
 
@@ -63,8 +56,6 @@ export const useCanvas = (drawCanvas: DrawCanvasFn, resources?: CanvasResourcesP
             const shiftTime = time - startTime;
             const shift = (shiftTime / ANIMATION.secDivider);
             frameCount++;
-
-            sounds.backroundSound.play();
 
             drawCanvas({
                 ctx,
@@ -92,9 +83,12 @@ export const useCanvas = (drawCanvas: DrawCanvasFn, resources?: CanvasResourcesP
         return () => {
             window.cancelAnimationFrame(animationFrameId);
             document.removeEventListener('keydown', handleHeroAction, false);
-            Object.values(sounds).forEach((sound) => {
-                sound.remove();
-            });
+
+            if (sounds) {
+                Object.values(sounds).forEach((sound) => {
+                    sound.remove();
+                });
+            }
         };
     }, [gameState]);
 

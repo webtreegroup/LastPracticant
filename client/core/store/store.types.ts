@@ -5,6 +5,7 @@ import { CommentModelProps, TopicModelProps } from 'server/models/models.types';
 import {
     CurrentUserInfoProps, GetAllResultsResponseProps,
 } from '../api';
+import { GameSound } from '../components/GameCanvas/GameSound';
 
 export interface StoreGameProps {
     isOver?: boolean
@@ -43,4 +44,5 @@ export interface StoreProps {
     forum: StoreForumProps
     leaderboard: LeaderboardProps
     userSettings: UserSettingsProps
+    sound?: GameSound
 }

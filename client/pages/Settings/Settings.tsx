@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { PageComponentProps } from 'client/shared/types';
 import { Paper } from 'client/shared/components';
 import { ROUTES } from 'client/routing';
@@ -11,11 +11,13 @@ import {
     profileSelector, settingsSelector, setUserSettingsAction, updateUserSettingsThunk,
 } from 'client/core/store';
 import { ColorThemes } from './Settings.config';
+import { GameMusicTheme } from '../Game/Game.config';
 
 const SettingsComponent: React.FC<PageComponentProps> = ({ title }) => {
     const dispatch = useDispatch();
     const userSettings = useSelector(settingsSelector);
     const profile = useSelector(profileSelector);
+    const [isMusicEnabled, setMusicEnable] = useState(false);
 
     const handleChangeColorTheme = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         const settings = {
@@ -27,6 +29,16 @@ const SettingsComponent: React.FC<PageComponentProps> = ({ title }) => {
             id: profile.id,
             settings: JSON.stringify(settings),
         }));
+    }, []);
+
+    const handleEnableMusic = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+        setMusicEnable((prev) => !prev);
+
+        if (event.target.checked) {
+            GameMusicTheme?.play();
+        } else {
+            GameMusicTheme?.stop();
+        }
     }, []);
 
     return (
@@ -43,6 +55,18 @@ const SettingsComponent: React.FC<PageComponentProps> = ({ title }) => {
                         />
                       )}
                     label={LOCAL.SETTINGS_THEME}
+                />
+
+                <FormControlLabel
+                    control={(
+                        <Switch
+                            checked={isMusicEnabled}
+                            onChange={handleEnableMusic}
+                            name="isMusicEnable"
+                            inputProps={{ 'aria-label': 'secondary checkbox' }}
+                        />
+                      )}
+                    label={LOCAL.MUSIC}
                 />
             </Paper>
         </PageLayout>
