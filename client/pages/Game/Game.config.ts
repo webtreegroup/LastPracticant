@@ -12,7 +12,7 @@ import heroDamage from 'client/core/components/GameCanvas/audio/hero-damage.mp3'
 import enemyDamage from 'client/core/components/GameCanvas/audio/explosion.mp3';
 import backroundSound from 'client/core/components/GameCanvas/audio/game-background-sound.mp3';
 
-export const GameMusicTheme = !isServer ? new GameSound(backroundSound, { autoplay: true }) : undefined;
+export const GameMusicTheme = !isServer ? new GameSound(backroundSound) : undefined;
 
 export const setGameSounds = !isServer ? () => ({
     heroDamage: new GameSound(heroDamage),

@@ -1,11 +1,9 @@
-import { ColorThemes } from 'client/pages/Settings/Settings.config';
 import { SnackBarDataProps } from 'client/shared/components';
 import { RouterState } from 'connected-react-router';
 import { CommentModelProps, TopicModelProps } from 'server/models/models.types';
 import {
     CurrentUserInfoProps, GetAllResultsResponseProps,
 } from '../api';
-import { GameSound } from '../components/GameCanvas/GameSound';
 
 export interface StoreGameProps {
     isOver?: boolean
@@ -30,7 +28,8 @@ export interface StoreSnackBarProps extends SnackBarDataProps {
 }
 
 export interface UserSettingsProps {
-    colorTheme: ColorThemes
+    isColorThemeLight?: boolean
+    isMusicEnabled?: boolean
 }
 
 export interface StoreProps {
@@ -44,5 +43,4 @@ export interface StoreProps {
     forum: StoreForumProps
     leaderboard: LeaderboardProps
     userSettings: UserSettingsProps
-    sound?: GameSound
 }

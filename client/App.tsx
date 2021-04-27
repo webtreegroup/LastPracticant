@@ -7,7 +7,6 @@ import { createMuiTheme, CssBaseline, ThemeProvider } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { Loader, SnackBar, NivelatorXY } from './shared/components';
 import { loaderSelector, settingsSelector, snackbarSelector } from './core/store/selectors';
-import { ColorThemes } from './pages/Settings/Settings.config';
 import { DARK_THEME, LIGHT_THEME } from './core/colors';
 
 export const App: React.FC = () => {
@@ -16,7 +15,7 @@ export const App: React.FC = () => {
     const userSettings = useSelector(settingsSelector);
 
     const themeSettings = useMemo(() => createMuiTheme({
-        palette: userSettings.colorTheme === ColorThemes.Light ? LIGHT_THEME : DARK_THEME,
+        palette: userSettings.isColorThemeLight ? LIGHT_THEME : DARK_THEME,
     }), [userSettings]);
 
     useEffect(() => {
