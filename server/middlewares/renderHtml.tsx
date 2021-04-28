@@ -46,7 +46,7 @@ function getPageHtml({
                     }}
                 />
                 <script src="/main.js" />
-                {/* <script src="/start-sw.js" /> */}
+                <script src="/start-sw.js" />
             </body>
         </html>,
     );
