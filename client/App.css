@@ -23,12 +23,3 @@ body {
     font-family: sans-serif;
     background: url(./app.png) #000 no-repeat center/cover !important;
 }
-
-.app {
-    &__unmute-music {
-        position: fixed;
-        top: 40px;
-        right: 40px;
-        z-index: 1000;
-    }
-}

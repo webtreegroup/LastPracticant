@@ -30,6 +30,7 @@ export interface StoreSnackBarProps extends SnackBarDataProps {
 export interface UserSettingsProps {
     isColorThemeLight?: boolean
     isMusicEnabled?: boolean
+    musicTheme?: 'intro' | 'game'
 }
 
 export interface StoreProps {

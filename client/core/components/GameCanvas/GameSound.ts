@@ -54,8 +54,8 @@ export class GameSound {
     }
 
     change(src: string) {
+        this.stop();
         this.sound.src = src;
-        this.reload();
 
         return this.play();
     }

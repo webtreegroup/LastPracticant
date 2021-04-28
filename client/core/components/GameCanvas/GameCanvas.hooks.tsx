@@ -1,4 +1,4 @@
-import { gameSelector, StoreGameProps } from 'client/core/store';
+import { gameSelector, setUserSettingsAction, StoreGameProps } from 'client/core/store';
 import { gameOverAction, gamePauseAction } from 'client/core/store/actions/game.actions';
 import { setGameSounds } from 'client/pages/Game/Game.config';
 import { FnActionRequiredProps } from 'client/shared/types';
@@ -29,6 +29,8 @@ export const useCanvas = (drawCanvas: DrawCanvasFn, resources?: CanvasResourcesP
 
     useEffect(() => {
         if (gameState.isOver || gameState.isPause) return;
+
+        dispatch(setUserSettingsAction({ musicTheme: 'game' }));
 
         const canvas = canvasRef.current;
         const ctx = canvas?.getContext('2d');

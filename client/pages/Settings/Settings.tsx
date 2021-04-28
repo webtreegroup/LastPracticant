@@ -8,9 +8,8 @@ import { FormControlLabel, Switch } from '@material-ui/core';
 import { LOCAL } from 'client/shared/consts';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-    profileSelector, settingsSelector, setUserSettingsAction, updateUserSettingsThunk, UserSettingsProps,
+    profileSelector, settingsSelector, updateUserSettingsThunk, UserSettingsProps,
 } from 'client/core/store';
-import { GameMusicTheme } from '../Game/Game.config';
 
 const SettingsComponent: React.FC<PageComponentProps> = ({ title }) => {
     const dispatch = useDispatch();
@@ -18,11 +17,7 @@ const SettingsComponent: React.FC<PageComponentProps> = ({ title }) => {
     const profile = useSelector(profileSelector);
 
     const updateSettings = useCallback((settings: UserSettingsProps) => {
-        dispatch(setUserSettingsAction(settings));
-        dispatch(updateUserSettingsThunk({
-            id: profile.id,
-            settings: JSON.stringify(settings),
-        }));
+        dispatch(updateUserSettingsThunk(profile.id, settings));
     }, []);
 
     const handleSettingsChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,16 +26,6 @@ const SettingsComponent: React.FC<PageComponentProps> = ({ title }) => {
             [event.target.name]: event.target.checked,
         });
     }, [userSettings]);
-
-    const handleEnableMusic = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.checked) {
-            GameMusicTheme?.play();
-        } else {
-            GameMusicTheme?.stop();
-        }
-
-        handleSettingsChange(event);
-    }, [handleSettingsChange]);
 
     return (
         <PageLayout goBackLink={ROUTES.HOME.path}>
@@ -62,7 +47,7 @@ const SettingsComponent: React.FC<PageComponentProps> = ({ title }) => {
                     control={(
                         <Switch
                             checked={userSettings.isMusicEnabled}
-                            onChange={handleEnableMusic}
+                            onChange={handleSettingsChange}
                             name="isMusicEnabled"
                             inputProps={{ 'aria-label': 'secondary checkbox' }}
                         />

@@ -1,6 +1,6 @@
 import './Game.css';
 
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { PageComponentProps } from 'client/shared/types';
 import {
     GamePainter, GameCanvas, PageLayout, Meta,
@@ -12,9 +12,8 @@ import { cloneDeep } from 'client/shared/utils';
 import { useSelector } from 'react-redux';
 import { gameSelector } from 'client/core/store';
 import { withCheckAuth } from 'client/core/HOCs';
-import { isServer } from 'client/core/store/store.consts';
-import backroundSound from 'client/core/components/GameCanvas/audio/game-background-sound.mp3';
-import { GameMusicTheme, GAME_RESOURSES, GAME_VIEWPORT } from './Game.config';
+import { NoSsr } from '@material-ui/core';
+import { GAME_RESOURSES, GAME_VIEWPORT } from './Game.config';
 import { GameOver } from './GameOver';
 import { GameNextLevel } from './GameNextLevel';
 
@@ -37,29 +36,22 @@ const GameComponent: React.FC<PageComponentProps> = React.memo(({ title }) => {
         gameState,
     ]);
 
-    useEffect(() => {
-        GameMusicTheme?.change(backroundSound);
-    }, []);
-
     return (
         <PageLayout className={block()} goBackLink={ROUTES.GAME_START.path}>
             <Meta title={title} />
-            {!isServer
-                ? (
-                    <>
-                        <div className={block('overlay')}>
-                            <GameCanvas
-                                resources={GAME_RESOURSES}
-                                drawCanvas={Painter.drawCanvas}
-                                {...GAME_VIEWPORT}
-                            />
-                        </div>
 
-                        <GameOver {...gameState} />
-                        <GameNextLevel {...gameState} />
-                    </>
-                )
-                : (<></>)}
+            <NoSsr>
+                <div className={block('overlay')}>
+                    <GameCanvas
+                        resources={GAME_RESOURSES}
+                        drawCanvas={Painter.drawCanvas}
+                        {...GAME_VIEWPORT}
+                    />
+                </div>
+
+                <GameOver {...gameState} />
+                <GameNextLevel {...gameState} />
+            </NoSsr>
         </PageLayout>
     );
 });
