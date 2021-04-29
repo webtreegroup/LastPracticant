@@ -13,6 +13,10 @@ const CACHE_FIRST_STRATEGY_URLS = [
     '/life.png',
     '/loader.gif',
     '/logo.png',
+    '/explosion.mp3',
+    '/hero-damage.mp3',
+    '/game-background-sound.mp3',
+    '/interface-background-sound.mp3',
 ];
 
 const NETWORK_ONLY_STRATEGY_URLS = [
