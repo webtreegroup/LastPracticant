@@ -5,7 +5,7 @@ env:
 
 on:
   push:
-    branches: [ dev ]
+    branches: [ LP-126 ]
 
   workflow_dispatch:
 
