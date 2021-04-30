@@ -27,12 +27,8 @@ export function withCheckAuth<T = any>(
         const { isAuth } = useSelector(authSelector);
 
         useEffect(() => {
-            debugger;
-            console.log('ept');
             const urlParams = new URLSearchParams(location.search);
             const oauthCode = urlParams.get('code');
-            console.log(isAuth);
-            console.log(oauthCode);
 
             if (oauthCode) {
                 dispatch(signinWithYandexThunk(oauthCode));
