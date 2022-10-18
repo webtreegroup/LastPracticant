@@ -1,0 +1,21 @@
+.page-layout {
+    height: 100%;
+
+    &__aside {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__main {
+        height: 100%;
+        padding: var(--space-lg);
+        flex-grow: 1;
+        position: relative;
+    }
+
+    &__go-back {
+        transform: rotate(180deg);
+    }
+}

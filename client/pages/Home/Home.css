@@ -1,0 +1,37 @@
+.home {
+    &__navigation-items {
+        padding: var(--space-md) 0 var(--space-sm);
+
+        li {
+            padding: var(--space-xs);
+
+            a {
+                padding: var(--space-xs) 0;
+                text-decoration: none;
+                width: 100%;
+            }
+        }
+
+        li:hover {
+            cursor: pointer;
+        }
+    }
+
+    &__paper {
+        padding: var(--space-md);
+    }
+
+    &__userdata {
+        padding: 0 var(--space-xs) var(--space-md);
+    }
+
+    &__username {
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    &__user-score {
+        font-size: 12px;
+        opacity: 0.6;
+    }
+}

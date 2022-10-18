@@ -1,0 +1,5 @@
+.forum {
+    &__comments-divider {
+        margin: var(--space-unit) 0;
+    }
+}

@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url('./shared/styles/normalize.css');
+
+:root {
+    --primary-color: #bb86fc;
+    --panel-background: #444444bd;
+    --general-background: #fff1;
+    --panel-shadow-1: #ffffff15;
+    --panel-shadow-2: #fff1;
+    --panel-shadow-3: #ffffff1e;
+    --half-white: #ffffff80;
+    --header-color: #ffffffde;
+}
+
+#root {
+    height: inherit;
+    display: flex;
+    background: var(--general-background);
+}
+
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background: url(./app.png) #000 no-repeat center/cover !important;
+}
