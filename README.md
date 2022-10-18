@@ -1,7 +1,3 @@
-# Deploy
-https://reykjavik-last-practicant-3.ya-praktikum.tech (Yandex Cloud - актуальная версия)
-https://last-practicant.herokuapp.com/ (Heroku - старая версия, больше не обновляется)
-
 # Сборка + БД (последовательность действий)
 Перед началом разработки необходимо поднять контейнеры с БД. Это можно сделать следующим образом (из корневой директории проекта):
 1) docker-compose up -d (поднять все контейнеры из docker-compose.yaml)
